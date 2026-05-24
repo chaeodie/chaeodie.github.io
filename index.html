@@ -4,447 +4,353 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>차어디 🅿️</title>
-<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CQ96X7TFBZ"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
+  window.dataLayer=window.dataLayer||[];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-CQ96X7TFBZ');
+  gtag('js',new Date()); gtag('config','G-CQ96X7TFBZ');
 </script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Sans:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=DM+Sans:wght@500;700&display=swap');
 
 :root {
-  --navy: #0D1B3E;
-  --navy-mid: #1A3260;
-  --accent: #2B5CE6;
-  --accent-soft: #EEF2FB;
-  --white: #FFFFFF;
-  --off-white: #F7F8FC;
-  --border: #DDE3F0;
-  --border-light: #EEF1F8;
-  --text: #0D1B3E;
-  --muted: #7A89A8;
-  --chip-h: 36px;
+  --navy:#0D1B3E; --navy-mid:#162D5E;
+  --accent:#3A6FE8; --accent-soft:#EEF2FB;
+  --white:#fff; --bg:#F4F6FB;
+  --border:#DDE3F0; --text:#0D1B3E; --muted:#7A89A8;
+  --green:#1DB37A;
+  --ch:32px; /* chip height */
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+
+html { height:100%; }
 
 body {
-  font-family: 'Noto Sans KR', sans-serif;
-  background: var(--off-white);
-  color: var(--text);
-  min-height: 100vh;
-  overscroll-behavior: none;
+  font-family:'Noto Sans KR',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  height:100dvh; /* Safari 동적 뷰포트 */
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
 }
 
-/* ── TOP BAR ── */
+/* ── TOPBAR ── */
 .topbar {
-  background: var(--navy);
-  padding: 14px 18px 12px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  background:var(--navy);
+  padding:10px 14px 8px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  flex-shrink:0;
+}
+.p-icon {
+  width:30px; height:30px;
+  background:var(--accent);
+  border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'DM Sans',sans-serif;
+  font-size:15px; font-weight:700; color:#fff;
+  flex-shrink:0;
 }
 .app-title {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--white);
-  letter-spacing: -0.3px;
+  font-family:'DM Sans',sans-serif;
+  font-size:17px; font-weight:700; color:#fff; letter-spacing:-.3px;
+  line-height:1;
 }
-.app-title em {
-  font-style: normal;
-  color: #7EB3FF;
-  font-size: 12px;
-  font-weight: 400;
-  display: block;
-  letter-spacing: 0.02em;
-  margin-bottom: 3px;
-  font-family: 'DM Sans', sans-serif;
-}
-.apt-name {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 9px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.3);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  text-align: right;
-  line-height: 1.6;
-}
-.apt-brand {
-  font-size: 8px;
-  color: rgba(255,255,255,0.18);
-  letter-spacing: 0.06em;
-  margin-top: 2px;
+.app-sub {
+  font-size:9px; color:rgba(255,255,255,.35);
+  margin-top:2px; letter-spacing:.04em;
 }
 
-/* ── CAR BAR ── */
+/* ── CAR TABS ── */
+.car-tabs-wrap {
+  background:var(--navy-mid);
+  padding:7px 14px 0;
+  flex-shrink:0;
+  display:flex;
+  align-items:flex-end;
+  gap:5px;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.car-tabs-wrap::-webkit-scrollbar { display:none; }
+
+.car-tab {
+  display:flex;
+  align-items:center;
+  gap:5px;
+  padding:6px 11px 7px;
+  border-radius:8px 8px 0 0;
+  background:rgba(255,255,255,.1);
+  color:rgba(255,255,255,.5);
+  font-size:12px; font-weight:500;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:background .12s,color .12s;
+  flex-shrink:0;
+  font-family:inherit;
+  border:none;
+  position:relative;
+}
+.car-tab.active {
+  background:var(--bg);
+  color:var(--navy);
+  font-weight:700;
+}
+.tab-del {
+  font-size:10px;
+  opacity:.5;
+  line-height:1;
+  padding:1px 2px;
+  border-radius:3px;
+}
+.tab-del:active { opacity:1; background:rgba(0,0,0,.15); }
+.tab-add {
+  padding:6px 10px 7px;
+  border-radius:8px 8px 0 0;
+  background:rgba(255,255,255,.07);
+  color:rgba(255,255,255,.4);
+  font-size:15px; line-height:1;
+  cursor:pointer;
+  flex-shrink:0;
+  border:none;
+  font-family:inherit;
+  transition:background .12s;
+}
+.tab-add:active { background:rgba(255,255,255,.15); }
+
+/* car name edit bar */
 .car-bar {
-  background: var(--navy-mid);
-  padding: 9px 18px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  background:var(--bg);
+  padding:6px 14px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
 }
-.car-icon { font-size: 14px; }
-.car-label {
-  font-size: 11px;
-  color: rgba(255,255,255,0.45);
-  white-space: nowrap;
+.car-icon { font-size:13px; }
+.car-lbl { font-size:10px; color:var(--muted); white-space:nowrap; }
+.car-display {
+  flex:1; display:flex; align-items:center; gap:5px;
+  font-size:13px; font-weight:500; color:var(--navy);
+  cursor:pointer;
 }
-.car-name-display {
-  flex: 1;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 500;
-  font-family: 'Noto Sans KR', sans-serif;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.pen { font-size:10px; opacity:.4; }
+.car-edit { flex:1; display:none; align-items:center; gap:5px; }
+.car-edit.open { display:flex; }
+.car-inp {
+  flex:1; padding:4px 8px;
+  border-radius:7px; border:1.5px solid var(--border);
+  background:#fff; color:var(--navy);
+  font-size:13px; font-weight:500; font-family:inherit;
+  outline:none;
 }
-.car-name-text { }
-.pen-icon {
-  font-size: 12px;
-  opacity: 0.5;
-  flex-shrink: 0;
-}
-.car-input-wrap { flex: 1; display: none; align-items: center; gap: 6px; }
-.car-input-wrap.open { display: flex; }
-.car-input {
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 8px;
-  outline: none;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 500;
-  font-family: 'Noto Sans KR', sans-serif;
-  padding: 5px 9px;
-  flex: 1;
-  min-width: 0;
-}
-.car-input::placeholder { color: rgba(255,255,255,0.3); }
-.car-save-btn {
-  background: rgba(255,255,255,0.15);
-  border: none;
-  border-radius: 7px;
-  color: #fff;
-  font-size: 12px;
-  padding: 5px 10px;
-  cursor: pointer;
-  font-family: inherit;
-  white-space: nowrap;
+.car-inp:focus { border-color:var(--accent); }
+.car-save {
+  padding:4px 10px; border-radius:7px; border:none;
+  background:var(--navy); color:#fff;
+  font-size:12px; cursor:pointer; font-family:inherit; font-weight:500;
 }
 
 /* ── BANNER ── */
 .banner {
-  margin: 14px 14px 0;
-  background: var(--white);
-  border-radius: 16px;
-  padding: 16px 18px;
-  border: 1px solid var(--border);
-  box-shadow: 0 2px 12px rgba(13,27,62,0.06);
+  margin:8px 10px 0;
+  background:var(--white);
+  border-radius:12px;
+  padding:10px 14px;
+  border:1px solid var(--border);
+  box-shadow:0 2px 10px rgba(13,27,62,.06);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-shrink:0;
 }
+.banner-left { flex:1; min-width:0; }
 .banner-lbl {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 6px;
+  font-size:9px; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:4px;
 }
 .banner-val {
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--navy);
-  letter-spacing: -0.8px;
-  min-height: 32px;
-  line-height: 1.2;
+  font-size:19px; font-weight:700; color:var(--navy);
+  letter-spacing:-.5px; line-height:1.2;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
-.banner-val.empty {
-  font-size: 15px;
-  font-weight: 400;
-  color: #BBC5D8;
-  letter-spacing: 0;
+.banner-val.empty { font-size:13px; font-weight:400; color:#BBC5D8; }
+.banner-time { font-size:10px; color:var(--muted); margin-top:3px; }
+.status-dot {
+  width:9px; height:9px; border-radius:50%;
+  background:#D0D8EC; flex-shrink:0;
+  transition:background .3s;
 }
-.banner-time {
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 5px;
-}
+.status-dot.on { background:var(--green); box-shadow:0 0 0 3px rgba(29,179,122,.15); }
 
-/* ── SECTIONS WRAPPER ── */
-.sections {
-  padding: 10px 14px 6px;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+/* ── SECTIONS ── */
+.sections-scroll {
+  flex:1;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  padding:8px 10px 6px;
+  display:flex;
+  flex-direction:column;
 }
+.sections-scroll::-webkit-scrollbar { display:none; }
 
-/* ── SECTION CARD ── */
 .sec {
-  background: var(--white);
-  border: 1px solid var(--border);
-  box-shadow: 0 1px 6px rgba(13,27,62,0.04);
-  transition: box-shadow 0.2s;
-  position: relative;
+  background:var(--white);
+  border:1px solid var(--border);
+  position:relative;
 }
-.sec:first-child { border-radius: 16px 16px 0 0; }
-.sec:last-child { border-radius: 0 0 16px 16px; }
-.sec:only-child { border-radius: 16px; }
-.sec + .sec { border-top: none; }
+.sec:first-child { border-radius:12px 12px 0 0; }
+.sec:last-child { border-radius:0 0 12px 12px; }
+.sec:only-child { border-radius:12px; }
+.sec+.sec { border-top:none; }
 .sec.dragging {
-  box-shadow: 0 8px 24px rgba(13,27,62,0.18);
-  z-index: 100;
-  opacity: 0.95;
-  border-radius: 16px !important;
-  border-top: 1px solid var(--border) !important;
+  box-shadow:0 8px 24px rgba(13,27,62,.18)!important;
+  z-index:100; border-radius:12px!important;
+  border-top:1px solid var(--border)!important;
 }
 
-.sec-inner { padding: 12px 14px; }
+.sec-inner { padding:8px 12px 10px; }
 
 .sec-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
+  display:flex; align-items:center; gap:6px; margin-bottom:7px;
 }
-
-/* drag handle */
-.drag-handle {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  padding: 4px 2px;
-  cursor: grab;
-  opacity: 0.3;
-  flex-shrink: 0;
-  touch-action: none;
+.drag-h {
+  display:flex; flex-direction:column; gap:2.5px;
+  padding:3px 2px; cursor:grab; opacity:.22; flex-shrink:0;
+  touch-action:none;
 }
-.drag-handle:active { cursor: grabbing; opacity: 0.6; }
-.drag-handle span {
-  display: block;
-  width: 16px;
-  height: 2px;
-  background: var(--text);
-  border-radius: 2px;
-}
-
+.drag-h:active { cursor:grabbing; opacity:.5; }
+.drag-h span { display:block; width:14px; height:1.5px; background:var(--text); border-radius:2px; }
 .sec-title {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  flex: 1;
+  font-size:9px; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted); flex:1;
 }
 .sec-add {
-  font-size: 12px;
-  color: var(--accent);
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 500;
-  padding: 2px 6px;
-  border-radius: 6px;
+  font-size:11px; color:var(--accent); background:none; border:none;
+  cursor:pointer; font-family:inherit; font-weight:500; padding:2px 5px; border-radius:5px;
 }
-.sec-add:active { background: var(--accent-soft); }
+.sec-add:active { background:var(--accent-soft); }
 
-/* chips */
-.chips-scroll {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-}
-.chips-scroll.collapsed { max-height: var(--chip-h); }
-.chips-scroll.expanded { max-height: 999px; }
+.chips { display:flex; flex-wrap:wrap; gap:5px; overflow:hidden; }
+.chips.collapsed { max-height:var(--ch); }
+.chips.expanded { max-height:999px; }
 
-.expand-btn {
-  display: none;
-  width: 100%;
-  margin-top: 7px;
-  font-size: 11px;
-  color: var(--accent);
-  background: var(--accent-soft);
-  border: none;
-  border-radius: 8px;
-  padding: 6px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 500;
-  text-align: center;
+.xbtn {
+  display:block; width:100%; margin-top:5px;
+  font-size:10px; color:var(--accent);
+  background:var(--accent-soft); border:none; border-radius:6px;
+  padding:5px; cursor:pointer; font-family:inherit; font-weight:600; text-align:center;
 }
-.expand-btn.visible { display: block; }
+.xbtn.hide { display:none; }
 
 .chip {
-  height: var(--chip-h);
-  padding: 0 15px;
-  border-radius: 999px;
-  border: 1.5px solid var(--border);
-  background: var(--white);
-  color: var(--text);
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  font-family: inherit;
-  transition: background .1s, border-color .1s, color .1s;
-  user-select: none;
-  white-space: nowrap;
-  display: inline-flex;
-  align-items: center;
-  position: relative;
+  height:var(--ch); padding:0 12px;
+  border-radius:999px; border:1.5px solid var(--border);
+  background:var(--white); color:var(--text);
+  font-size:12px; font-weight:500; cursor:pointer; font-family:inherit;
+  transition:background .1s,border-color .1s,color .1s;
+  user-select:none; white-space:nowrap;
+  display:inline-flex; align-items:center; position:relative;
 }
-.chip:active { transform: scale(0.95); }
-.chip.on { background: var(--navy); border-color: var(--navy); color: #fff; }
-.chip.sm { padding: 0; width: 38px; justify-content: center; font-size: 12px; }
-.del-x {
-  display: none;
-  position: absolute;
-  top: -6px; right: -6px;
-  width: 16px; height: 16px;
-  border-radius: 50%;
-  background: #99A8C0;
-  color: #fff;
-  font-size: 9px;
-  line-height: 16px;
-  text-align: center;
-  cursor: pointer;
-  font-weight: 700;
+.chip:active { transform:scale(.93); }
+.chip.on { background:var(--navy); border-color:var(--navy); color:#fff; }
+.chip.sm { padding:0; width:34px; justify-content:center; font-size:11px; }
+.dx {
+  display:none; position:absolute; top:-5px; right:-5px;
+  width:14px; height:14px; border-radius:50%;
+  background:#8A9BB8; color:#fff;
+  font-size:8px; line-height:14px; text-align:center;
+  cursor:pointer; font-weight:700;
 }
-.chip.on .del-x { display: block; }
+.chip.on .dx { display:block; }
 
-/* add row */
-.add-row {
-  display: none;
-  align-items: center;
-  gap: 7px;
-  margin-top: 10px;
-}
-.add-row.open { display: flex; }
+.add-row { display:none; align-items:center; gap:6px; margin-top:7px; }
+.add-row.open { display:flex; }
 .add-inp {
-  padding: 9px 12px;
-  border-radius: 10px;
-  border: 1.5px solid var(--border);
-  background: var(--off-white);
-  color: var(--text);
-  font-size: 14px;
-  outline: none;
-  font-family: inherit;
+  padding:7px 10px; border-radius:8px;
+  border:1.5px solid var(--border); background:var(--bg);
+  color:var(--text); font-size:13px; outline:none; font-family:inherit;
 }
-.add-inp:focus { border-color: var(--accent); background: #fff; }
+.add-inp:focus { border-color:var(--accent); background:#fff; }
 .add-ok {
-  padding: 9px 13px;
-  border-radius: 10px;
-  border: none;
-  background: var(--navy);
-  color: #fff;
-  font-size: 13px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 500;
+  padding:7px 11px; border-radius:8px; border:none;
+  background:var(--navy); color:#fff;
+  font-size:12px; cursor:pointer; font-family:inherit; font-weight:500;
 }
-.add-cancel {
-  padding: 9px;
-  background: none;
-  border: none;
-  color: var(--muted);
-  font-size: 13px;
-  cursor: pointer;
-  font-family: inherit;
+.add-no {
+  padding:7px; background:none; border:none;
+  color:var(--muted); font-size:12px; cursor:pointer; font-family:inherit;
 }
+.cu-hint { font-size:10px; color:#BBC5D8; margin-top:5px; font-style:italic; }
 
-.cu-hint {
-  font-size: 11px;
-  color: #BBC5D8;
-  margin-top: 6px;
-  font-style: italic;
-}
-
-/* bottom */
-.bottom-area {
-  text-align: center;
-  padding: 16px 14px 32px;
-}
-.clear-btn {
-  background: none;
-  border: 1px solid var(--border);
-  color: var(--muted);
-  font-size: 11px;
-  padding: 7px 20px;
-  border-radius: 999px;
-  cursor: pointer;
-  font-family: inherit;
-}
-.clear-btn:active { background: var(--border-light); }
-.credit {
-  margin-top: 14px;
-  font-size: 10px;
-  color: #BBC5D8;
-  letter-spacing: .04em;
+/* bottom credit */
+.credit-bar {
+  text-align:center; padding:5px 0 6px;
+  font-size:9px; color:#C8D0E0; letter-spacing:.05em;
+  flex-shrink:0;
 }
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
+<!-- TOPBAR -->
 <div class="topbar">
-  <div class="app-title">
-    <em>주차 위치 확인기</em>
-    차어디 🅿️
-  </div>
-  <div class="apt-name">
-    Gamil Park Centreville
-    <div class="apt-brand">Dongbu Corporation</div>
+  <div class="p-icon">P</div>
+  <div>
+    <div class="app-title">차어디 🅿️</div>
+    <div class="app-sub">주차 위치 확인기</div>
   </div>
 </div>
 
-<!-- CAR BAR -->
+<!-- CAR TABS -->
+<div class="car-tabs-wrap" id="car-tabs"></div>
+
+<!-- CAR NAME BAR -->
 <div class="car-bar">
   <span class="car-icon">🚗</span>
-  <span class="car-label">내 차</span>
-  <div class="car-name-display" id="car-display" onclick="openCarEdit()">
-    <span class="car-name-text" id="car-name-text">부릉이</span>
-    <span class="pen-icon">✏️</span>
+  <span class="car-lbl">내 차</span>
+  <div class="car-display" id="car-display" onclick="openCarEdit()">
+    <span id="car-name-txt">부릉이</span>
+    <span class="pen">✏️</span>
   </div>
-  <div class="car-input-wrap" id="car-edit">
-    <input class="car-input" id="car-input" type="text" placeholder="차 이름 (5자 이내)" maxlength="5"
+  <div class="car-edit" id="car-edit">
+    <input class="car-inp" id="car-inp" type="text" placeholder="이름 (5자)" maxlength="5"
       onkeydown="if(event.key==='Enter')saveCarName()">
-    <button class="car-save-btn" onclick="saveCarName()">완료</button>
+    <button class="car-save" onclick="saveCarName()">완료</button>
+    <button class="add-no" onclick="closeCarEdit()">취소</button>
   </div>
 </div>
 
 <!-- BANNER -->
 <div class="banner">
-  <div class="banner-lbl">저장된 위치</div>
-  <div class="banner-val empty" id="bv">아직 저장된 위치가 없어요</div>
-  <div class="banner-time" id="bt"></div>
+  <div class="banner-left">
+    <div class="banner-lbl">저장된 위치</div>
+    <div class="banner-val empty" id="bv">아직 저장된 위치가 없어요</div>
+    <div class="banner-time" id="bt"></div>
+  </div>
+  <div class="status-dot" id="sdot"></div>
 </div>
 
-<!-- SECTIONS (순서 변경 가능) -->
-<div class="sections" id="sections-wrap">
-
+<!-- SECTIONS -->
+<div class="sections-scroll" id="sections-wrap">
   <div class="sec" data-key="fl">
     <div class="sec-inner">
       <div class="sec-head">
-        <div class="drag-handle" title="길게 눌러 순서 변경">
-          <span></span><span></span><span></span>
-        </div>
+        <div class="drag-h"><span></span><span></span><span></span></div>
         <span class="sec-title">층</span>
         <button class="sec-add" onclick="openAdd('fl')">+ 추가</button>
       </div>
-      <div class="chips-scroll expanded" id="fl-chips"></div>
+      <div class="chips expanded" id="fl-chips"></div>
       <div class="add-row" id="fl-add">
-        <input class="add-inp" id="fl-i" placeholder="예: B3" maxlength="4" style="width:80px"
+        <input class="add-inp" id="fl-i" placeholder="예: B3" maxlength="5" style="width:80px"
           onkeydown="if(event.key==='Enter')doAdd('fl')">
         <button class="add-ok" onclick="doAdd('fl')">확인</button>
-        <button class="add-cancel" onclick="closeAdd('fl')">취소</button>
+        <button class="add-no" onclick="closeAdd('fl')">취소</button>
       </div>
     </div>
   </div>
@@ -452,36 +358,28 @@ body {
   <div class="sec" data-key="zo">
     <div class="sec-inner">
       <div class="sec-head">
-        <div class="drag-handle" title="길게 눌러 순서 변경">
-          <span></span><span></span><span></span>
-        </div>
+        <div class="drag-h"><span></span><span></span><span></span></div>
         <span class="sec-title">구역 A – Z</span>
       </div>
-      <div id="zo-wrap">
-        <div class="chips-scroll collapsed" id="zo-chips"></div>
-        <button class="expand-btn visible" id="zo-exp" onclick="toggleExpand('zo')">▾ 더보기</button>
-      </div>
+      <div class="chips collapsed" id="zo-chips"></div>
+      <button class="xbtn" id="zo-xbtn" onclick="toggleExp('zo')">▾ 더보기</button>
     </div>
   </div>
 
   <div class="sec" data-key="nu">
     <div class="sec-inner">
       <div class="sec-head">
-        <div class="drag-handle" title="길게 눌러 순서 변경">
-          <span></span><span></span><span></span>
-        </div>
+        <div class="drag-h"><span></span><span></span><span></span></div>
         <span class="sec-title">번호</span>
         <button class="sec-add" onclick="openAdd('nu')">+ 추가</button>
       </div>
-      <div id="nu-wrap">
-        <div class="chips-scroll collapsed" id="nu-chips"></div>
-        <button class="expand-btn visible" id="nu-exp" onclick="toggleExpand('nu')">▾ 더보기</button>
-      </div>
+      <div class="chips collapsed" id="nu-chips"></div>
+      <button class="xbtn" id="nu-xbtn" onclick="toggleExp('nu')">▾ 더보기</button>
       <div class="add-row" id="nu-add">
         <input class="add-inp" id="nu-i" placeholder="예: 35" maxlength="4"
           inputmode="numeric" style="width:80px" onkeydown="if(event.key==='Enter')doAdd('nu')">
         <button class="add-ok" onclick="doAdd('nu')">확인</button>
-        <button class="add-cancel" onclick="closeAdd('nu')">취소</button>
+        <button class="add-no" onclick="closeAdd('nu')">취소</button>
       </div>
     </div>
   </div>
@@ -489,324 +387,272 @@ body {
   <div class="sec" data-key="cu">
     <div class="sec-inner">
       <div class="sec-head">
-        <div class="drag-handle" title="길게 눌러 순서 변경">
-          <span></span><span></span><span></span>
-        </div>
+        <div class="drag-h"><span></span><span></span><span></span></div>
         <span class="sec-title">커스텀</span>
         <button class="sec-add" onclick="openAdd('cu')">+ 추가</button>
       </div>
-      <div class="chips-scroll expanded" id="cu-chips"></div>
-      <div class="cu-hint" id="cu-hint">+ 추가로 나만의 항목을 넣어보세요 (왼쪽문, 기둥옆 …)</div>
+      <div class="chips expanded" id="cu-chips"></div>
+      <div class="cu-hint" id="cu-hint">+ 추가로 나만의 항목 (왼쪽문, 기둥옆 …)</div>
       <div class="add-row" id="cu-add">
         <input class="add-inp" id="cu-i" placeholder="5글자 이내" maxlength="5"
           style="width:110px" onkeydown="if(event.key==='Enter')doAdd('cu')">
         <button class="add-ok" onclick="doAdd('cu')">확인</button>
-        <button class="add-cancel" onclick="closeAdd('cu')">취소</button>
+        <button class="add-no" onclick="closeAdd('cu')">취소</button>
       </div>
     </div>
   </div>
-
 </div>
 
-<div class="bottom-area">
-  <button class="clear-btn" onclick="clearSel()">저장 위치 초기화</button>
-  <div class="credit">made by @chaeodie</div>
-</div>
+<div class="credit-bar">made by @chaeodie</div>
 
 <script>
-var ZONES = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-var DNUMS = Array.from({length:20}, function(_,i){ return String(i+1); });
-var expandState = { zo: false, nu: false };
+var ZONES='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+var DNUMS=Array.from({length:20},function(_,i){return String(i+1);});
+var DEF_FLOORS=['B1','B2','지상'];
+var expState={zo:false,nu:false};
 
-var S = {
-  floors: ['B1','B2'],
-  xnums: [],
-  customs: [],
-  sel: { fl:null, zo:null, nu:null, cu:null },
-  at: null,
-  car: '',
-  secOrder: ['fl','zo','nu','cu']
+/* ── STATE ── */
+var S={
+  cars:[{name:'부릉이',floors:['B1','B2','지상'],xnums:[],customs:[],sel:{fl:null,zo:null,nu:null,cu:null},at:null,secOrder:['fl','zo','nu','cu']}],
+  active:0
 };
 
-function load() {
-  try { var d = JSON.parse(localStorage.getItem('chaeodie_v1')||'null'); if(d) S=d; } catch(e){}
-  if (!S.secOrder) S.secOrder = ['fl','zo','nu','cu'];
-}
-function persist() {
-  try { localStorage.setItem('chaeodie_v1', JSON.stringify(S)); } catch(e){}
+function load(){try{var d=JSON.parse(localStorage.getItem('chaeodie_v3')||'null');if(d)S=d;}catch(e){}}
+function persist(){try{localStorage.setItem('chaeodie_v3',JSON.stringify(S));}catch(e){}}
+function car(){return S.cars[S.active];}
+
+/* ── CAR TABS ── */
+function renderTabs(){
+  var wrap=document.getElementById('car-tabs');
+  wrap.innerHTML='';
+  S.cars.forEach(function(c,i){
+    var btn=document.createElement('button');
+    btn.className='car-tab'+(i===S.active?' active':'');
+    btn.innerHTML=c.name+(S.cars.length>1?'<span class="tab-del" onclick="delCar('+i+',event)">✕</span>':'');
+    btn.onclick=function(e){if(e.target.classList.contains('tab-del'))return;switchCar(i);};
+    wrap.appendChild(btn);
+  });
+  var add=document.createElement('button');
+  add.className='tab-add';
+  add.textContent='+';
+  add.title='차량 추가';
+  add.onclick=addCar;
+  wrap.appendChild(add);
 }
 
-/* ── CAR NAME ── */
-function openCarEdit() {
-  document.getElementById('car-display').style.display = 'none';
-  var wrap = document.getElementById('car-edit');
-  wrap.classList.add('open');
-  var inp = document.getElementById('car-input');
-  inp.value = S.car || '';
-  inp.placeholder = '차 이름 (5자 이내)';
-  setTimeout(function(){ inp.focus(); inp.select(); }, 50);
-}
-function saveCarName() {
-  var v = document.getElementById('car-input').value.trim();
-  S.car = v;
+function switchCar(i){
+  S.active=i;
   persist();
-  document.getElementById('car-name-text').textContent = v || '부릉이';
+  renderTabs();
+  restoreOrder();
+  render();
+  upd();
+  document.getElementById('car-name-txt').textContent=car().name||'내 차';
+  closeCarEdit();
+}
+
+function addCar(){
+  var name=prompt('새 차 이름을 입력하세요 (5자 이내)','');
+  if(name===null)return;
+  name=name.trim().slice(0,5)||'차'+(S.cars.length+1);
+  S.cars.push({name:name,floors:['B1','B2','지상'],xnums:[],customs:[],sel:{fl:null,zo:null,nu:null,cu:null},at:null,secOrder:['fl','zo','nu','cu']});
+  S.active=S.cars.length-1;
+  persist();
+  renderTabs();
+  restoreOrder();
+  render();
+  upd();
+  document.getElementById('car-name-txt').textContent=name;
+}
+
+function delCar(i,e){
+  e.stopPropagation();
+  if(S.cars.length===1){alert('차량이 1대일 때는 삭제할 수 없어요.');return;}
+  if(!confirm('['+S.cars[i].name+'] 차량을 삭제할까요?'))return;
+  S.cars.splice(i,1);
+  if(S.active>=S.cars.length)S.active=S.cars.length-1;
+  persist();
+  renderTabs();
+  restoreOrder();
+  render();
+  upd();
+  document.getElementById('car-name-txt').textContent=car().name||'내 차';
+}
+
+/* ── CAR NAME EDIT ── */
+function openCarEdit(){
+  document.getElementById('car-display').style.display='none';
+  document.getElementById('car-edit').classList.add('open');
+  var inp=document.getElementById('car-inp');
+  inp.value=car().name||'';
+  setTimeout(function(){inp.focus();inp.select();},50);
+}
+function closeCarEdit(){
   document.getElementById('car-edit').classList.remove('open');
-  document.getElementById('car-display').style.display = 'flex';
+  document.getElementById('car-display').style.display='flex';
+}
+function saveCarName(){
+  var v=document.getElementById('car-inp').value.trim();
+  if(v)car().name=v;
+  persist();
+  document.getElementById('car-name-txt').textContent=car().name||'내 차';
+  renderTabs();
+  closeCarEdit();
   upd();
 }
 
-/* ── DISPLAY UPDATE ── */
-function upd() {
-  var parts = [S.sel.fl, S.sel.zo, S.sel.nu, S.sel.cu].filter(Boolean);
-  var bv = document.getElementById('bv');
-  var bt = document.getElementById('bt');
-  var car = S.car || '부릉이';
-  if (parts.length) {
-    bv.textContent = car + '  ·  ' + parts.join(' · ');
+/* ── DISPLAY ── */
+function upd(){
+  var c=car();
+  var parts=[c.sel.fl,c.sel.zo,c.sel.nu,c.sel.cu].filter(Boolean);
+  var bv=document.getElementById('bv'),bt=document.getElementById('bt'),dot=document.getElementById('sdot');
+  if(parts.length){
+    bv.textContent=(c.name||'내 차')+'  ·  '+parts.join(' · ');
     bv.classList.remove('empty');
-    if (S.at) {
-      var d = new Date(S.at);
-      bt.textContent = (d.getMonth()+1)+'월 '+d.getDate()+'일 '
-        +('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)+' 저장됨';
-    }
-  } else {
-    bv.textContent = '아직 저장된 위치가 없어요';
+    dot.classList.add('on');
+    if(c.at){var d=new Date(c.at);bt.textContent=(d.getMonth()+1)+'월 '+d.getDate()+'일 '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)+' 저장됨';}
+  }else{
+    bv.textContent='아직 저장된 위치가 없어요';
     bv.classList.add('empty');
-    bt.textContent = '';
+    dot.classList.remove('on');
+    bt.textContent='';
   }
 }
 
 /* ── TAP ── */
-function tap(cat, val) {
-  S.sel[cat] = S.sel[cat] === val ? null : val;
-  S.at = Date.now();
-  persist(); render(); upd();
+function tap(cat,val){
+  var c=car();
+  c.sel[cat]=c.sel[cat]===val?null:val;
+  c.at=Date.now();
+  persist();render();upd();
 }
-
-function delFloor(val, e) {
+function delFloor(val,e){
   e.stopPropagation();
-  S.floors = S.floors.filter(function(v){return v!==val;});
-  if (S.sel.fl === val) S.sel.fl = null;
-  persist(); render(); upd();
+  var c=car();
+  c.floors=c.floors.filter(function(v){return v!==val;});
+  if(c.sel.fl===val)c.sel.fl=null;
+  persist();render();upd();
 }
-function delCustom(val, e) {
+function delCustom(val,e){
   e.stopPropagation();
-  S.customs = S.customs.filter(function(v){return v!==val;});
-  if (S.sel.cu === val) S.sel.cu = null;
-  persist(); render(); upd();
+  var c=car();
+  c.customs=c.customs.filter(function(v){return v!==val;});
+  if(c.sel.cu===val)c.sel.cu=null;
+  persist();render();upd();
 }
 
 /* ── RENDER ── */
-function render() {
-  // Floors
-  document.getElementById('fl-chips').innerHTML = S.floors.map(function(v, i) {
-    var on = S.sel.fl === v;
-    var canDel = i >= 2;
+function render(){
+  var c=car();
+  document.getElementById('fl-chips').innerHTML=c.floors.map(function(v,i){
+    var on=c.sel.fl===v,canDel=!DEF_FLOORS.includes(v);
     return '<button class="chip'+(on?' on':'')+'" onclick="tap(\'fl\',\''+v+'\')">'+v
-      +(canDel?'<span class="del-x" onclick="delFloor(\''+v+'\',event)">✕</span>':'')
-      +'</button>';
+      +(canDel?'<span class="dx" onclick="delFloor(\''+v+'\',event)">✕</span>':'')+'</button>';
   }).join('');
 
-  // Zones
-  document.getElementById('zo-chips').innerHTML = ZONES.map(function(v){
-    return '<button class="chip sm'+(S.sel.zo===v?' on':'')+'" onclick="tap(\'zo\',\''+v+'\')">'+v+'</button>';
+  document.getElementById('zo-chips').innerHTML=ZONES.map(function(v){
+    return '<button class="chip sm'+(c.sel.zo===v?' on':'')+'" onclick="tap(\'zo\',\''+v+'\')">'+v+'</button>';
   }).join('');
 
-  // Numbers
-  var allNums = DNUMS.concat(S.xnums);
-  document.getElementById('nu-chips').innerHTML = allNums.map(function(v){
-    return '<button class="chip sm'+(S.sel.nu===v?' on':'')+'" onclick="tap(\'nu\',\''+v+'\')">'+v+'</button>';
+  var allNums=DNUMS.concat(c.xnums);
+  document.getElementById('nu-chips').innerHTML=allNums.map(function(v){
+    return '<button class="chip sm'+(c.sel.nu===v?' on':'')+'" onclick="tap(\'nu\',\''+v+'\')">'+v+'</button>';
   }).join('');
 
-  // Custom
-  var ce = document.getElementById('cu-chips');
-  var ch = document.getElementById('cu-hint');
-  if (!S.customs.length) {
-    ce.innerHTML = ''; ch.style.display = 'block';
-  } else {
-    ch.style.display = 'none';
-    ce.innerHTML = S.customs.map(function(v){
-      var on = S.sel.cu === v;
-      return '<button class="chip'+(on?' on':'')+'" onclick="tap(\'cu\',\''+v+'\')">'
-        +v+'<span class="del-x" onclick="delCustom(\''+v+'\',event)">✕</span></button>';
+  var ce=document.getElementById('cu-chips'),ch=document.getElementById('cu-hint');
+  if(!c.customs.length){ce.innerHTML='';ch.style.display='block';}
+  else{
+    ch.style.display='none';
+    ce.innerHTML=c.customs.map(function(v){
+      return '<button class="chip'+(c.sel.cu===v?' on':'')+'" onclick="tap(\'cu\',\''+v+'\')">'
+        +v+'<span class="dx" onclick="delCustom(\''+v+'\',event)">✕</span></button>';
     }).join('');
   }
-
-  // section border-radius
-  applySectionRadius();
+  applyRadius();
 }
 
-function applySectionRadius() {
-  var secs = document.querySelectorAll('#sections-wrap .sec');
-  secs.forEach(function(s, i) {
-    s.style.borderRadius = '';
-    s.style.borderTop = '';
-    if (i === 0) s.style.borderRadius = '16px 16px 0 0';
-    if (i === secs.length - 1) s.style.borderRadius = (secs.length===1?'16px':'0 0 16px 16px');
-    if (i > 0) s.style.borderTop = 'none';
+function applyRadius(){
+  var secs=document.querySelectorAll('#sections-wrap .sec');
+  secs.forEach(function(s,i){
+    s.style.borderRadius='';s.style.borderTop='';
+    if(i===0)s.style.borderRadius='12px 12px 0 0';
+    if(i===secs.length-1)s.style.borderRadius=(secs.length===1?'12px':'0 0 12px 12px');
+    if(i>0)s.style.borderTop='none';
   });
 }
 
 /* ── EXPAND ── */
-function toggleExpand(key) {
-  expandState[key] = !expandState[key];
-  var el = document.getElementById(key+'-chips');
-  var btn = document.getElementById(key+'-exp');
-  if (expandState[key]) {
-    el.classList.remove('collapsed'); el.classList.add('expanded');
-    btn.textContent = '▴ 접기';
-  } else {
-    el.classList.remove('expanded'); el.classList.add('collapsed');
-    btn.textContent = '▾ 더보기';
-  }
+function toggleExp(key){
+  expState[key]=!expState[key];
+  var el=document.getElementById(key+'-chips'),btn=document.getElementById(key+'-xbtn');
+  if(expState[key]){el.classList.remove('collapsed');el.classList.add('expanded');btn.textContent='▴ 접기';}
+  else{el.classList.remove('expanded');el.classList.add('collapsed');btn.textContent='▾ 더보기';}
 }
 
 /* ── ADD ── */
-function openAdd(t) {
-  ['fl','nu','cu'].forEach(function(x){
-    document.getElementById(x+'-add').classList.remove('open');
-    document.getElementById(x+'-i').value='';
-  });
+function openAdd(t){
+  ['fl','nu','cu'].forEach(function(x){document.getElementById(x+'-add').classList.remove('open');document.getElementById(x+'-i').value='';});
   document.getElementById(t+'-add').classList.add('open');
-  setTimeout(function(){ document.getElementById(t+'-i').focus(); }, 50);
+  setTimeout(function(){document.getElementById(t+'-i').focus();},50);
 }
-function closeAdd(t) {
-  document.getElementById(t+'-add').classList.remove('open');
-  document.getElementById(t+'-i').value='';
-}
-function doAdd(t) {
-  var v = document.getElementById(t+'-i').value.trim();
-  if (!v) return;
-  if (t==='fl' && !S.floors.includes(v)) S.floors.push(v);
-  else if (t==='nu' && !DNUMS.includes(v) && !S.xnums.includes(v)) S.xnums.push(v);
-  else if (t==='cu' && !S.customs.includes(v)) S.customs.push(v);
-  closeAdd(t); persist(); render(); upd();
+function closeAdd(t){document.getElementById(t+'-add').classList.remove('open');document.getElementById(t+'-i').value='';}
+function doAdd(t){
+  var v=document.getElementById(t+'-i').value.trim();if(!v)return;
+  var c=car();
+  if(t==='fl'&&!c.floors.includes(v))c.floors.push(v);
+  else if(t==='nu'&&!DNUMS.includes(v)&&!c.xnums.includes(v))c.xnums.push(v);
+  else if(t==='cu'&&!c.customs.includes(v))c.customs.push(v);
+  closeAdd(t);persist();render();upd();
 }
 
-/* ── CLEAR ── */
-function clearSel() {
-  if (!confirm('저장된 위치를 초기화할까요?')) return;
-  S.sel = {fl:null,zo:null,nu:null,cu:null}; S.at = null;
-  persist(); render(); upd();
-}
-
-/* ── DRAG & DROP (touch + mouse) ── */
-(function() {
-  var wrap = document.getElementById('sections-wrap');
-  var dragging = null;
-  var startY = 0;
-  var origIndex = 0;
-  var placeholder = null;
-  var dragOffsetY = 0;
-
-  function getHandle(el) {
-    return el.classList.contains('drag-handle') ? el : el.closest('.drag-handle');
-  }
-
-  function getSecs() {
-    return Array.from(wrap.querySelectorAll('.sec:not(.dragging)'));
-  }
-
-  function startDrag(sec, clientY) {
-    dragging = sec;
-    var rect = sec.getBoundingClientRect();
-    dragOffsetY = clientY - rect.top;
-    origIndex = Array.from(wrap.children).indexOf(sec);
-
+/* ── DRAG ── */
+(function(){
+  var wrap=document.getElementById('sections-wrap');
+  var dragging=null,placeholder=null,dragOffsetY=0;
+  function getH(el){return el.classList.contains('drag-h')?el:el.closest('.drag-h');}
+  function start(sec,y){
+    dragging=sec;var r=sec.getBoundingClientRect();dragOffsetY=y-r.top;
     sec.classList.add('dragging');
-    sec.style.position = 'fixed';
-    sec.style.left = rect.left + 'px';
-    sec.style.width = rect.width + 'px';
-    sec.style.top = (clientY - dragOffsetY) + 'px';
-    sec.style.zIndex = 999;
-
-    placeholder = document.createElement('div');
-    placeholder.style.height = rect.height + 'px';
-    placeholder.style.background = 'var(--accent-soft)';
-    placeholder.style.borderRadius = '12px';
-    placeholder.style.border = '2px dashed var(--border)';
-    placeholder.style.margin = '0';
-    wrap.insertBefore(placeholder, sec.nextSibling);
+    sec.style.cssText='position:fixed;left:'+r.left+'px;width:'+r.width+'px;top:'+(y-dragOffsetY)+'px;z-index:999;';
+    placeholder=document.createElement('div');
+    placeholder.style.cssText='height:'+r.height+'px;background:var(--accent-soft);border-radius:10px;border:2px dashed var(--border);';
+    wrap.insertBefore(placeholder,sec.nextSibling);
   }
-
-  function moveDrag(clientY) {
-    if (!dragging) return;
-    dragging.style.top = (clientY - dragOffsetY) + 'px';
-
-    var secs = getSecs();
-    var midY = clientY;
-    var insertBefore = null;
-    for (var i = 0; i < secs.length; i++) {
-      var r = secs[i].getBoundingClientRect();
-      if (midY < r.top + r.height / 2) { insertBefore = secs[i]; break; }
-    }
-    if (insertBefore) {
-      wrap.insertBefore(placeholder, insertBefore);
-    } else {
-      wrap.appendChild(placeholder);
-    }
+  function move(y){
+    if(!dragging)return;
+    dragging.style.top=(y-dragOffsetY)+'px';
+    var secs=Array.from(wrap.querySelectorAll('.sec:not(.dragging)'));
+    var ins=null;
+    for(var i=0;i<secs.length;i++){var r=secs[i].getBoundingClientRect();if(y<r.top+r.height/2){ins=secs[i];break;}}
+    ins?wrap.insertBefore(placeholder,ins):wrap.appendChild(placeholder);
   }
-
-  function endDrag() {
-    if (!dragging) return;
-    dragging.style.position = '';
-    dragging.style.left = '';
-    dragging.style.width = '';
-    dragging.style.top = '';
-    dragging.style.zIndex = '';
-    dragging.classList.remove('dragging');
-    wrap.insertBefore(dragging, placeholder);
-    placeholder.remove();
-    placeholder = null;
-
-    // save order
-    var newOrder = Array.from(wrap.querySelectorAll('.sec')).map(function(s){ return s.dataset.key; });
-    S.secOrder = newOrder;
-    persist();
-    applySectionRadius();
-    dragging = null;
+  function end(){
+    if(!dragging)return;
+    dragging.style.cssText='';dragging.classList.remove('dragging');
+    wrap.insertBefore(dragging,placeholder);placeholder.remove();placeholder=null;
+    car().secOrder=Array.from(wrap.querySelectorAll('.sec')).map(function(s){return s.dataset.key;});
+    persist();applyRadius();dragging=null;
   }
-
-  wrap.addEventListener('mousedown', function(e) {
-    var handle = getHandle(e.target);
-    if (!handle) return;
-    var sec = handle.closest('.sec');
-    if (!sec) return;
-    e.preventDefault();
-    startDrag(sec, e.clientY);
-  });
-  document.addEventListener('mousemove', function(e) { moveDrag(e.clientY); });
-  document.addEventListener('mouseup', endDrag);
-
-  wrap.addEventListener('touchstart', function(e) {
-    var handle = getHandle(e.target);
-    if (!handle) return;
-    var sec = handle.closest('.sec');
-    if (!sec) return;
-    e.preventDefault();
-    startDrag(sec, e.touches[0].clientY);
-  }, { passive: false });
-  document.addEventListener('touchmove', function(e) {
-    if (dragging) { e.preventDefault(); moveDrag(e.touches[0].clientY); }
-  }, { passive: false });
-  document.addEventListener('touchend', endDrag);
+  wrap.addEventListener('mousedown',function(e){var h=getH(e.target);if(!h)return;var s=h.closest('.sec');if(!s)return;e.preventDefault();start(s,e.clientY);});
+  document.addEventListener('mousemove',function(e){move(e.clientY);});
+  document.addEventListener('mouseup',end);
+  wrap.addEventListener('touchstart',function(e){var h=getH(e.target);if(!h)return;var s=h.closest('.sec');if(!s)return;e.preventDefault();start(s,e.touches[0].clientY);},{passive:false});
+  document.addEventListener('touchmove',function(e){if(dragging){e.preventDefault();move(e.touches[0].clientY);}},{passive:false});
+  document.addEventListener('touchend',end);
 })();
 
-/* ── RESTORE SECTION ORDER ── */
-function restoreOrder() {
-  var wrap = document.getElementById('sections-wrap');
-  if (!S.secOrder) return;
-  S.secOrder.forEach(function(key) {
-    var el = wrap.querySelector('[data-key="'+key+'"]');
-    if (el) wrap.appendChild(el);
-  });
+/* ── ORDER RESTORE ── */
+function restoreOrder(){
+  var c=car();if(!c.secOrder)return;
+  var wrap=document.getElementById('sections-wrap');
+  c.secOrder.forEach(function(k){var el=wrap.querySelector('[data-key="'+k+'"]');if(el)wrap.appendChild(el);});
 }
 
 /* ── INIT ── */
 load();
+renderTabs();
 restoreOrder();
-document.getElementById('car-name-text').textContent = S.car || '부릉이';
+document.getElementById('car-name-txt').textContent=car().name||'부릉이';
 render();
 upd();
 </script>
