@@ -8,8 +8,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="차어디">
-<link rel="manifest" href="/gamil/manifest.json">
-<link rel="apple-touch-icon" href="/gamil/icon-192.png">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icon-192.png">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-182J3M4RHB"></script>
 <script>
   window.dataLayer=window.dataLayer||[];
@@ -201,7 +201,7 @@ body {
   flex:1;
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
-  padding:8px 10px 6px;
+  padding:8px 10px 8px;
   display:flex;
   flex-direction:column;
 }
@@ -374,7 +374,8 @@ body {
   flex-shrink:0;
 }
 .credit-bar {
-  text-align:center; padding:5px 0 6px;
+  text-align:center;
+  padding:5px 0 max(12px, env(safe-area-inset-bottom));
   font-size:9px; color:#C8D0E0; letter-spacing:.05em;
   flex-shrink:0;
 }
@@ -500,13 +501,10 @@ body {
       </div>
     </div>
   </div>
+
 </div>
 
-<!-- =====================================================
-     📢 광고 배너 영역 (광고 시작 시 아래 내용 교체)
-     현재: 감일 지역 슬로건 표시
-     광고 시작 시: <a href="tel:010XXXXXXXX"> 로 교체
-     ===================================================== -->
+<!-- 광고 배너 -->
 <div class="ad-banner">
   <div class="ad-inner">
     <div class="ad-slogan">
@@ -517,6 +515,7 @@ body {
   </div>
 </div>
 
+<!-- credit -->
 <div class="credit-bar">
   made by @chaeodie &nbsp;·&nbsp;
   <a href="mailto:chaeodie@gmail.com" style="color:#BBC5D8;text-decoration:none;">문의 chaeodie@gmail.com</a>
@@ -778,7 +777,7 @@ var deferredPrompt = null;
 
 // 서비스워커 등록
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/gamil/sw.js')
+  navigator.serviceWorker.register('./sw.js', {scope: './'})
     .catch(function(e){ console.log('SW 등록 실패:', e); });
 }
 
@@ -813,17 +812,20 @@ function closePwaBanner() {
   localStorage.setItem('pwa_banner_closed', '1');
 }
 
-// iOS는 beforeinstallprompt 없음 → 별도 안내
+// iOS는 beforeinstallprompt 없음 → 배너로 안내
 var isIos = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
 var isInStandaloneMode = ('standalone' in navigator) && navigator.standalone;
-if (isIos && !isInStandaloneMode && !localStorage.getItem('pwa_installed')) {
+if (isIos && !isInStandaloneMode && !localStorage.getItem('pwa_installed') && !localStorage.getItem('pwa_banner_closed')) {
   setTimeout(function(){
-    document.getElementById('pwa-banner').classList.add('show');
-    document.getElementById('pwa-install-btn').textContent = '방법 보기';
-    document.getElementById('pwa-install-btn').onclick = function() {
-      alert('Safari 하단 공유버튼(□↑) → "홈 화면에 추가" 탭해주세요!');
-      closePwaBanner();
-    };
+    var banner = document.getElementById('pwa-banner');
+    var btn = document.getElementById('pwa-install-btn');
+    var txt = banner.querySelector('.pwa-txt-main');
+    var sub = banner.querySelector('.pwa-txt-sub');
+    txt.textContent = '📱 홈화면에 추가하면 앱처럼 써요';
+    sub.innerHTML = '하단 공유버튼 □↑ → "홈 화면에 추가"';
+    btn.textContent = '닫기';
+    btn.onclick = function(){ closePwaBanner(); };
+    banner.classList.add('show');
   }, 2000);
 }
 </script>
