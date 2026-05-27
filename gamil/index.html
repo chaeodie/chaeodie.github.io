@@ -197,6 +197,16 @@ body {
 }
 .status-dot.on { background:var(--green); box-shadow:0 0 0 3px rgba(29,179,122,.15); }
 
+.share-btn {
+  font-size:10px; font-weight:600;
+  color:var(--accent); background:var(--accent-soft);
+  border:1px solid var(--accent);
+  border-radius:6px; padding:4px 8px;
+  cursor:pointer; font-family:inherit;
+  white-space:nowrap;
+}
+.share-btn:active { opacity:.7; }
+
 /* ── SECTIONS ── */
 .sections-scroll {
   flex:1;
@@ -436,7 +446,10 @@ body {
     <div class="banner-val empty" id="bv">아직 저장된 위치가 없어요</div>
     <div class="banner-time" id="bt"></div>
   </div>
-  <div class="status-dot" id="sdot"></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;">
+    <div class="status-dot" id="sdot"></div>
+    <button class="share-btn" id="share-btn" onclick="shareLocation()" style="display:none">공유</button>
+  </div>
 </div>
 
 <!-- SECTIONS -->
@@ -619,16 +632,41 @@ function upd(){
   var c=car();
   var parts=[c.sel.fl,c.sel.zo,c.sel.nu,c.sel.cu].filter(Boolean);
   var bv=document.getElementById('bv'),bt=document.getElementById('bt'),dot=document.getElementById('sdot');
+  var shareBtn=document.getElementById('share-btn');
   if(parts.length){
     bv.textContent=(c.name||'내 차')+'  ·  '+parts.join(' · ');
     bv.classList.remove('empty');
     dot.classList.add('on');
+    shareBtn.style.display='block';
     if(c.at){var d=new Date(c.at);bt.textContent=(d.getMonth()+1)+'월 '+d.getDate()+'일 '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)+' 저장됨';}
   }else{
     bv.textContent='아직 저장된 위치가 없어요';
     bv.classList.add('empty');
     dot.classList.remove('on');
+    shareBtn.style.display='none';
     bt.textContent='';
+  }
+}
+
+/* ── SHARE ── */
+function shareLocation(){
+  var c=car();
+  var parts=[c.sel.fl,c.sel.zo,c.sel.nu,c.sel.cu].filter(Boolean);
+  var name=c.name||'내 차';
+  var loc=parts.join(' · ');
+  var d=new Date(c.at);
+  var timeStr=(d.getMonth()+1)+'월 '+d.getDate()+'일 '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
+  var text='🅿️ '+name+' 주차 위치\n\n'+loc+'\n\n'+timeStr+' 저장';
+  if(navigator.share){
+    navigator.share({ title:'차어디 - 주차 위치', text:text })
+      .catch(function(){});
+  } else {
+    // 공유 API 미지원 시 클립보드 복사
+    if(navigator.clipboard){
+      navigator.clipboard.writeText(text).then(function(){
+        alert('클립보드에 복사됐어요! 카카오톡에 붙여넣기 하세요.');
+      });
+    }
   }
 }
 
