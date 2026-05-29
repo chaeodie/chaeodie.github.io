@@ -79,6 +79,8 @@ body{
   display:flex; align-items:flex-end; gap:5px;
   overflow-x:auto; -webkit-overflow-scrolling:touch;
   scrollbar-width:none; flex-shrink:0;
+  flex-wrap:nowrap;
+  white-space:nowrap;
 }
 .car-tabs-wrap::-webkit-scrollbar{display:none;}
 .car-tab{
@@ -312,9 +314,14 @@ body{
 
 /* COLOR PICKER */
 .color-overlay{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.45);z-index:600;
-  align-items:flex-end;justify-content:center;
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100vw; height:100vh;
+  background:rgba(0,0,0,.55);
+  z-index:9050;
+  align-items:flex-end;
+  justify-content:center;
   padding-bottom:max(16px,env(safe-area-inset-bottom));
 }
 .color-overlay.show{display:flex;}
@@ -350,6 +357,7 @@ body{
 .color-opt:active{transform:scale(.85);}
 .color-opt.selected{border-color:var(--accent);transform:scale(1.1);}
 .color-opt.white{border:2px solid var(--border);}
+.color-close{
   width:100%;padding:11px;border-radius:10px;border:none;
   background:var(--accent);color:#fff;
   font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;
@@ -357,17 +365,23 @@ body{
 
 /* HINT PANEL */
 .hint-overlay{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.5);z-index:500;
-  align-items:flex-end;justify-content:center;
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100vw; height:100vh;
+  background:rgba(0,0,0,.6);
+  z-index:9000;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
 }
 .hint-overlay.show{display:flex;}
 .hint-box{
   background:#fff;
-  border-radius:20px 20px 0 0;
-  padding:20px 20px max(24px,env(safe-area-inset-bottom));
-  width:100%;max-width:400px;
-  max-height:80dvh;overflow-y:auto;
+  border-radius:20px;
+  padding:20px;
+  width:100%; max-width:420px;
+  max-height:85dvh; overflow-y:auto;
 }
 .hint-top{
   display:flex;align-items:center;justify-content:space-between;
@@ -391,9 +405,15 @@ body{
 
 /* ONBOARD */
 .onboard-overlay{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.45);z-index:500;
-  align-items:center;justify-content:center;padding:20px;
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100vw; height:100vh;
+  background:rgba(0,0,0,.55);
+  z-index:9100;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
 }
 .onboard-overlay.show{display:flex;}
 .onboard-box{
@@ -549,6 +569,14 @@ body{
 <!-- CAR TABS -->
 <div class="car-tabs-wrap" id="car-tabs"></div>
 
+<!-- 차량 추가 입력창 -->
+<div id="add-car-bar" style="display:none;background:#fff;padding:8px 14px;border-bottom:1px solid var(--border);flex-shrink:0;align-items:center;gap:8px;">
+  <input id="add-car-inp" class="car-inp" type="text" placeholder="차 이름 (5자 이내)" maxlength="5"
+    style="flex:1;" onkeydown="if(event.key==='Enter')confirmAddCar()">
+  <button class="car-save" onclick="confirmAddCar()">추가</button>
+  <button class="add-no" onclick="cancelAddCar()">취소</button>
+</div>
+
 <!-- CAR BAR -->
 <div class="car-bar">
   <button class="car-icon-btn" id="car-icon-btn" onclick="openColorPicker()">🚗</button>
@@ -700,8 +728,18 @@ function renderTabs(){
   S.cars.forEach(function(c,i){
     var btn=document.createElement('button');
     btn.className='car-tab'+(i===S.active?' active':'');
-    btn.innerHTML=(c.icon||'🚗')+' '+c.name+(S.cars.length>1?'<span class="tab-del" onclick="delCar('+i+',event)">✕</span>':'');
-    btn.onclick=function(e){if(e.target.classList.contains('tab-del'))return;switchCar(i);};
+    var filter=c.iconFilter||'none';
+    var iconSpan='<span style="filter:'+filter+';display:inline-block;">'+(c.icon||'🚗')+'</span>';
+    btn.innerHTML=iconSpan+' '+c.name;
+    btn.onclick=function(){ switchCar(i); };
+
+    if(S.cars.length>1){
+      var del=document.createElement('span');
+      del.className='tab-del';
+      del.textContent='✕';
+      del.onclick=function(e){ e.stopPropagation(); delCar(i); };
+      btn.appendChild(del);
+    }
     wrap.appendChild(btn);
   });
   var add=document.createElement('button');
@@ -718,26 +756,36 @@ function switchCar(i){
 }
 
 function addCar(){
-  var name=prompt('새 차 이름 (5자 이내)','');
-  if(name===null)return;
-  name=name.trim().slice(0,5)||'차'+(S.cars.length+1);
-  S.cars.push({name:name,icon:'🚗',floors:['B1','B2','지상'],xnums:[],customs:[],
-               sel:{fl:null,zo:null,nu:null,cu:null},at:null,secOrder:['fl','zo','nu','cu']});
-  S.active=S.cars.length-1;
-  persist(); renderTabs(); restoreOrder(); render(); upd();
-  document.getElementById('car-name-txt').textContent=name;
-  document.getElementById('car-icon-btn').textContent='🚗';
+  var bar = document.getElementById('add-car-bar');
+  bar.style.display = 'flex';
+  setTimeout(function(){ document.getElementById('add-car-inp').focus(); }, 50);
 }
 
-function delCar(i,e){
-  e.stopPropagation();
-  if(S.cars.length===1){alert('차량이 1대일 때는 삭제할 수 없어요.');return;}
-  if(!confirm('['+S.cars[i].name+'] 삭제할까요?'))return;
+function confirmAddCar(){
+  var v = document.getElementById('add-car-inp').value.trim().slice(0,5);
+  var name = v || '차'+(S.cars.length+1);
+  S.cars.push({name:name,icon:'🚗',iconFilter:'none',floors:['B1','B2','지상'],xnums:[],customs:[],
+               sel:{fl:null,zo:null,nu:null,cu:null},at:null,secOrder:['fl','zo','nu','cu']});
+  S.active = S.cars.length-1;
+  persist(); cancelAddCar(); renderTabs(); restoreOrder(); render(); upd();
+  document.getElementById('car-name-txt').textContent = name;
+  document.getElementById('car-icon-btn').textContent = '🚗';
+  updateIconBtn();
+}
+
+function cancelAddCar(){
+  document.getElementById('add-car-inp').value = '';
+  document.getElementById('add-car-bar').style.display = 'none';
+}
+
+function delCar(i){
+  if(S.cars.length===1) return;
   S.cars.splice(i,1);
-  if(S.active>=S.cars.length)S.active=S.cars.length-1;
+  if(S.active>=S.cars.length) S.active=S.cars.length-1;
   persist(); renderTabs(); restoreOrder(); render(); upd();
   document.getElementById('car-name-txt').textContent=car().name||'부릉이';
   document.getElementById('car-icon-btn').textContent=car().icon||'🚗';
+  updateIconBtn();
 }
 
 /* CAR ICON */
@@ -933,10 +981,10 @@ function closeHint(){document.getElementById('hint-overlay').classList.remove('s
 /* ONBOARDING */
 function closeOnboard(){
   document.getElementById('onboard').classList.remove('show');
-  localStorage.setItem('onboard_done','1');
+  localStorage.setItem('chaeodie_onboard_v1','1');
 }
 function checkOnboard(){
-  if(!localStorage.getItem('onboard_done')){
+  if(!localStorage.getItem('chaeodie_onboard_v1')){
     setTimeout(function(){document.getElementById('onboard').classList.add('show');},1500);
     setTimeout(function(){
       document.querySelectorAll('.drag-h').forEach(function(h){
