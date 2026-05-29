@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>차어디 🅿️ · 감일</title>
-<meta name="theme-color" content="#0D1B3E">
+<meta name="theme-color" content="#1A1A1A">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="차어디">
@@ -19,385 +19,504 @@
   gtag('event','page_view',{region:'gamil'});
 </script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=DM+Sans:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=DM+Sans:wght@500;600;700&display=swap');
 
 :root {
-  --navy:#0D1B3E; --navy-mid:#162D5E;
-  --accent:#3A6FE8; --accent-soft:#EEF2FB;
-  --white:#fff; --bg:#F4F6FB;
-  --border:#DDE3F0; --text:#0D1B3E; --muted:#7A89A8;
-  --green:#1DB37A;
-  --ch:32px; /* chip height */
+  --accent:#F4631E;
+  --accent-soft:#FEF0EA;
+  --accent-chip:#F4631E;
+  --black:#1A1A1A;
+  --black-mid:#2C2C2C;
+  --white:#FFFFFF;
+  --bg:#F5F5F5;
+  --card:#FFFFFF;
+  --border:#E8E8E8;
+  --text:#1A1A1A;
+  --muted:#9A9A9A;
+  --green:#22C55E;
+  --ch:36px;
 }
 
-*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
-
-html { height:100%; }
-
-body {
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{height:100%;}
+body{
   font-family:'Noto Sans KR',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  height:100dvh;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
+  background:var(--bg); color:var(--text);
+  height:100dvh; overflow:hidden;
+  display:flex; flex-direction:column;
 }
 
-/* ── TOPBAR ── */
-.topbar {
-  background:var(--navy);
-  padding:10px 14px 8px;
-  padding-top: max(10px, env(safe-area-inset-top));
-  display:flex;
-  align-items:center;
-  gap:9px;
+/* TOPBAR */
+.topbar{
+  background:var(--white);
+  border-bottom:1px solid var(--border);
+  padding:max(12px,env(safe-area-inset-top)) 16px 10px;
+  display:flex; align-items:center; gap:10px;
   flex-shrink:0;
 }
-.p-icon {
-  width:30px; height:30px;
-  background:var(--accent);
-  border-radius:8px;
-  display:flex; align-items:center; justify-content:center;
+.p-icon{
+  width:36px; height:36px; background:var(--accent);
+  border-radius:10px; display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; align-self:center;
+}
+.app-title{
   font-family:'DM Sans',sans-serif;
-  font-size:15px; font-weight:700; color:#fff;
-  flex-shrink:0;
+  font-size:18px; font-weight:700; color:var(--text); letter-spacing:-.3px; line-height:1;
 }
-.app-title {
-  font-family:'DM Sans',sans-serif;
-  font-size:17px; font-weight:700; color:#fff; letter-spacing:-.3px;
-  line-height:1;
+.app-sub{font-size:9px;color:var(--muted);margin-top:2px;letter-spacing:.04em;}
+.gamil-tag{
+  margin-left:auto; text-align:right;
+  font-family:'DM Sans',sans-serif; font-size:8px;
+  color:var(--muted); letter-spacing:.1em; text-transform:uppercase; line-height:1.6;
 }
-.app-sub {
-  font-size:9px; color:rgba(255,255,255,.35);
-  margin-top:2px; letter-spacing:.04em;
-}
+.gamil-tag strong{display:block;font-size:9px;color:var(--text);font-weight:600;}
 
-/* ── CAR TABS ── */
-.car-tabs-wrap {
-  background:var(--navy-mid);
-  padding:7px 14px 0;
-  flex-shrink:0;
-  display:flex;
-  align-items:flex-end;
-  gap:5px;
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
+/* CAR TABS */
+.car-tabs-wrap{
+  background:var(--white);
+  border-bottom:1px solid var(--border);
+  padding:8px 14px 0;
+  display:flex; align-items:flex-end; gap:5px;
+  overflow-x:auto; -webkit-overflow-scrolling:touch;
+  scrollbar-width:none; flex-shrink:0;
 }
-.car-tabs-wrap::-webkit-scrollbar { display:none; }
-
-.car-tab {
-  display:flex;
-  align-items:center;
-  gap:5px;
-  padding:6px 11px 7px;
+.car-tabs-wrap::-webkit-scrollbar{display:none;}
+.car-tab{
+  display:flex; align-items:center; gap:5px;
+  padding:7px 14px 8px;
   border-radius:8px 8px 0 0;
-  background:rgba(255,255,255,.1);
-  color:rgba(255,255,255,.5);
+  background:transparent;
+  color:var(--muted);
   font-size:12px; font-weight:500;
-  cursor:pointer;
-  white-space:nowrap;
-  transition:background .12s,color .12s;
-  flex-shrink:0;
-  font-family:inherit;
-  border:none;
-  position:relative;
+  cursor:pointer; white-space:nowrap;
+  border:none; border-bottom:2px solid transparent;
+  font-family:inherit; flex-shrink:0;
+  transition:color .12s,border-color .12s;
 }
-.car-tab.active {
-  background:var(--bg);
-  color:var(--navy);
-  font-weight:700;
+.car-tab.active{color:var(--accent);font-weight:700;border-bottom:2px solid var(--accent);}
+.tab-del{font-size:10px;opacity:.4;padding:1px 2px;border-radius:3px;line-height:1;}
+.tab-del:active{opacity:1;}
+.tab-add{
+  padding:7px 10px 8px; border-radius:8px 8px 0 0;
+  background:transparent;
+  color:var(--muted); font-size:16px; line-height:1;
+  cursor:pointer; border:none; font-family:inherit; flex-shrink:0;
 }
-.tab-del {
-  font-size:10px;
-  opacity:.5;
-  line-height:1;
-  padding:1px 2px;
-  border-radius:3px;
-}
-.tab-del:active { opacity:1; background:rgba(0,0,0,.15); }
-.tab-add {
-  padding:6px 10px 7px;
-  border-radius:8px 8px 0 0;
-  background:rgba(255,255,255,.07);
-  color:rgba(255,255,255,.4);
-  font-size:15px; line-height:1;
-  cursor:pointer;
-  flex-shrink:0;
-  border:none;
-  font-family:inherit;
-  transition:background .12s;
-}
-.tab-add:active { background:rgba(255,255,255,.15); }
 
-/* car name edit bar */
-.car-bar {
-  background:var(--bg);
-  padding:6px 14px;
-  display:flex;
-  align-items:center;
-  gap:7px;
+/* CAR BAR */
+.car-bar{
+  background:var(--white);
+  padding:8px 14px;
+  display:flex; align-items:center; gap:8px;
   border-bottom:1px solid var(--border);
   flex-shrink:0;
 }
-.car-icon { font-size:13px; }
-.car-lbl { font-size:10px; color:var(--muted); white-space:nowrap; }
-.car-display {
+.car-icon-btn{
+  font-size:16px; cursor:pointer;
+  border:none; padding:4px 6px;
+  border-radius:8px;
+  transition:transform .1s; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  min-width:34px; height:30px;
+}
+.car-icon-btn:active{transform:scale(.85);}
+.car-lbl{font-size:10px;color:var(--muted);white-space:nowrap;}
+.car-display{
   flex:1; display:flex; align-items:center; gap:5px;
-  font-size:13px; font-weight:500; color:var(--navy);
-  cursor:pointer;
+  font-size:13px; font-weight:600; color:var(--text); cursor:pointer;
 }
-.pen { font-size:10px; opacity:.4; }
-.car-edit { flex:1; display:none; align-items:center; gap:5px; }
-.car-edit.open { display:flex; }
-.car-inp {
-  flex:1; padding:4px 8px;
-  border-radius:7px; border:1.5px solid var(--border);
-  background:#fff; color:var(--navy);
-  font-size:13px; font-weight:500; font-family:inherit;
-  outline:none;
+.pen{font-size:11px;opacity:.35;}
+.car-edit{flex:1;display:none;align-items:center;gap:5px;}
+.car-edit.open{display:flex;}
+.car-inp{
+  flex:1; padding:5px 9px; border-radius:8px;
+  border:1.5px solid var(--border); background:var(--bg);
+  color:var(--text); font-size:13px; font-weight:600;
+  font-family:inherit; outline:none;
 }
-.car-inp:focus { border-color:var(--accent); }
-.car-save {
-  padding:4px 10px; border-radius:7px; border:none;
-  background:var(--navy); color:#fff;
-  font-size:12px; cursor:pointer; font-family:inherit; font-weight:500;
+.car-inp:focus{border-color:var(--accent);}
+.car-save{
+  padding:5px 11px; border-radius:8px; border:none;
+  background:var(--accent); color:#fff;
+  font-size:12px; font-weight:600; cursor:pointer; font-family:inherit;
 }
+.hint-btn{
+  display:flex; align-items:center; gap:4px;
+  background:var(--accent-soft); border:1px solid rgba(244,99,30,.2);
+  border-radius:8px; color:var(--accent);
+  font-size:11px; font-weight:600;
+  padding:5px 9px; cursor:pointer; font-family:inherit;
+  white-space:nowrap; flex-shrink:0;
+}
+.hint-btn:active{opacity:.7;}
 
-/* ── BANNER ── */
-.banner {
-  margin:8px 10px 0;
-  background:var(--white);
-  border-radius:12px;
-  padding:10px 14px;
+/* BANNER */
+.banner{
+  margin:10px 12px 0;
+  background:var(--card);
+  border-radius:14px;
+  padding:12px 14px;
   border:1px solid var(--border);
-  box-shadow:0 2px 10px rgba(13,27,62,.06);
-  display:flex;
-  align-items:center;
-  gap:10px;
+  box-shadow:0 1px 8px rgba(0,0,0,.06);
   flex-shrink:0;
 }
-.banner-left { flex:1; min-width:0; }
-.banner-lbl {
-  font-size:9px; font-weight:700; letter-spacing:.1em;
-  text-transform:uppercase; color:var(--muted); margin-bottom:4px;
+.banner-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+.banner-lbl{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.banner-val{font-size:22px;font-weight:700;color:var(--text);letter-spacing:-.5px;line-height:1.2;}
+.banner-val.empty{font-size:13px;font-weight:400;color:#C8C8C8;}
+.banner-time{font-size:10px;color:var(--muted);margin-top:4px;}
+.banner-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;}
+.status-dot{width:9px;height:9px;border-radius:50%;background:#D8D8D8;transition:background .3s;}
+.status-dot.on{background:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,.15);}
+.share-btn{
+  display:none;
+  align-items:center; gap:5px;
+  padding:7px 12px; border-radius:9px;
+  border:1.5px solid var(--accent);
+  background:var(--accent-soft);
+  color:var(--accent); font-size:12px; font-weight:600;
+  cursor:pointer; font-family:inherit; white-space:nowrap;
 }
-.banner-val {
-  font-size:19px; font-weight:700; color:var(--navy);
-  letter-spacing:-.5px; line-height:1.2;
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-}
-.banner-val.empty { font-size:13px; font-weight:400; color:#BBC5D8; }
-.banner-time { font-size:10px; color:var(--muted); margin-top:3px; }
-.status-dot {
-  width:9px; height:9px; border-radius:50%;
-  background:#D0D8EC; flex-shrink:0;
-  transition:background .3s;
-}
-.status-dot.on { background:var(--green); box-shadow:0 0 0 3px rgba(29,179,122,.15); }
+.share-btn:active{opacity:.7;}
 
-.share-btn {
-  font-size:10px; font-weight:600;
-  color:var(--accent); background:var(--accent-soft);
-  border:1px solid var(--accent);
-  border-radius:6px; padding:4px 8px;
-  cursor:pointer; font-family:inherit;
-  white-space:nowrap;
-}
-.share-btn:active { opacity:.7; }
-
-/* ── SECTIONS ── */
-.sections-scroll {
-  flex:1;
-  overflow-y:auto;
+/* SECTIONS */
+.sections-scroll{
+  flex:1; overflow-y:auto;
   -webkit-overflow-scrolling:touch;
-  padding:8px 10px 8px;
-  display:flex;
-  flex-direction:column;
+  padding:10px 12px 0;
+  display:flex; flex-direction:column;
+  scrollbar-width:none;
 }
-.sections-scroll::-webkit-scrollbar { display:none; }
+.sections-scroll::-webkit-scrollbar{display:none;}
 
-.sec {
-  background:var(--white);
+.sec{
+  background:var(--card);
   border:1px solid var(--border);
-  position:relative;
 }
-.sec:first-child { border-radius:12px 12px 0 0; }
-.sec:last-child { border-radius:0 0 12px 12px; }
-.sec:only-child { border-radius:12px; }
-.sec+.sec { border-top:none; }
-.sec.dragging {
-  box-shadow:0 8px 24px rgba(13,27,62,.18)!important;
-  z-index:100; border-radius:12px!important;
+.sec:first-child{border-radius:14px 14px 0 0;}
+.sec:last-child{border-radius:0 0 14px 14px;}
+.sec:only-child{border-radius:14px;}
+.sec+.sec{border-top:none;}
+.sec.dragging{
+  box-shadow:0 8px 28px rgba(0,0,0,.15)!important;
+  z-index:100; border-radius:14px!important;
   border-top:1px solid var(--border)!important;
 }
 
-.sec-inner { padding:8px 12px 10px; }
+.sec-inner{padding:10px 13px 12px;}
+.sec-head{display:flex;align-items:center;gap:7px;margin-bottom:9px;}
 
-.sec-head {
-  display:flex; align-items:center; gap:6px; margin-bottom:7px;
-}
-.drag-h {
-  display:flex; flex-direction:column; gap:2.5px;
-  padding:3px 2px; cursor:grab; opacity:.22; flex-shrink:0;
+.drag-h{
+  display:flex;flex-direction:column;gap:2.5px;
+  padding:3px 2px;cursor:grab;opacity:.2;flex-shrink:0;
   touch-action:none;
 }
-.drag-h:active { cursor:grabbing; opacity:.5; }
-.drag-h span { display:block; width:14px; height:1.5px; background:var(--text); border-radius:2px; }
-.sec-title {
-  font-size:9px; font-weight:700; letter-spacing:.1em;
-  text-transform:uppercase; color:var(--muted); flex:1;
+.drag-h:active{cursor:grabbing;opacity:.5;}
+.drag-h span{display:block;width:14px;height:1.5px;background:var(--text);border-radius:2px;}
+.drag-h.wobble{animation:wobble .6s ease .5s 2;}
+@keyframes wobble{
+  0%{transform:translateY(0);}25%{transform:translateY(-3px);}
+  75%{transform:translateY(3px);}100%{transform:translateY(0);}
 }
-.sec-add {
-  font-size:11px; color:var(--accent); background:none; border:none;
-  cursor:pointer; font-family:inherit; font-weight:500; padding:2px 5px; border-radius:5px;
+
+.sec-icon{font-size:13px;flex-shrink:0;}
+.sec-title{
+  font-size:11px;font-weight:700;letter-spacing:.04em;
+  color:var(--text);flex:1;
 }
-.sec-add:active { background:var(--accent-soft); }
-
-.chips { display:flex; flex-wrap:wrap; gap:5px; overflow:hidden; }
-.chips.collapsed { max-height:var(--ch); }
-.chips.expanded { max-height:999px; }
-
-.xbtn {
-  display:block; width:100%; margin-top:5px;
-  font-size:10px; color:var(--accent);
-  background:var(--accent-soft); border:none; border-radius:6px;
-  padding:5px; cursor:pointer; font-family:inherit; font-weight:600; text-align:center;
+.sec-title span{font-weight:400;color:var(--muted);font-size:10px;}
+.sec-add{
+  font-size:12px;color:var(--accent);background:none;border:none;
+  cursor:pointer;font-family:inherit;font-weight:600;
+  padding:3px 7px;border-radius:6px;
 }
-.xbtn.hide { display:none; }
+.sec-add:active{background:var(--accent-soft);}
 
-.chip {
-  height:var(--ch); padding:0 12px;
-  border-radius:999px; border:1.5px solid var(--border);
-  background:var(--white); color:var(--text);
-  font-size:12px; font-weight:500; cursor:pointer; font-family:inherit;
+.chips{display:flex;flex-wrap:wrap;gap:6px;overflow:hidden;}
+.chips.collapsed{max-height:var(--ch);}
+.chips.expanded{max-height:999px;}
+
+.xbtn{
+  display:none;width:100%;margin-top:7px;
+  font-size:10px;color:var(--accent);
+  background:var(--accent-soft);border:none;border-radius:7px;
+  padding:6px;cursor:pointer;font-family:inherit;
+  font-weight:600;text-align:center;
+}
+.xbtn.visible{display:block;}
+
+.chip{
+  height:var(--ch);padding:0 14px;
+  border-radius:999px;border:1.5px solid var(--border);
+  background:var(--white);color:var(--text);
+  font-size:13px;font-weight:500;cursor:pointer;
+  font-family:inherit;
   transition:background .1s,border-color .1s,color .1s;
-  user-select:none; white-space:nowrap;
-  display:inline-flex; align-items:center; position:relative;
+  user-select:none;white-space:nowrap;
+  display:inline-flex;align-items:center;position:relative;
 }
-.chip:active { transform:scale(.93); }
-.chip.on { background:var(--navy); border-color:var(--navy); color:#fff; }
-.chip.sm { padding:0; width:34px; justify-content:center; font-size:11px; }
-.dx {
-  display:none; position:absolute; top:-5px; right:-5px;
-  width:14px; height:14px; border-radius:50%;
-  background:#8A9BB8; color:#fff;
-  font-size:8px; line-height:14px; text-align:center;
-  cursor:pointer; font-weight:700;
-}
-.chip.on .dx { display:block; }
+.chip:active{transform:scale(.93);}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+.chip.sm{padding:0;width:38px;justify-content:center;font-size:12px;}
 
-.add-row { display:none; align-items:center; gap:6px; margin-top:7px; }
-.add-row.open { display:flex; }
-.add-inp {
-  padding:7px 10px; border-radius:8px;
-  border:1.5px solid var(--border); background:var(--bg);
-  color:var(--text); font-size:13px; outline:none; font-family:inherit;
+.dx{
+  display:none;position:absolute;top:-5px;right:-5px;
+  width:15px;height:15px;border-radius:50%;
+  background:#bbb;color:#fff;
+  font-size:8px;line-height:15px;text-align:center;
+  cursor:pointer;font-weight:700;
 }
-.add-inp:focus { border-color:var(--accent); background:#fff; }
-.add-ok {
-  padding:7px 11px; border-radius:8px; border:none;
-  background:var(--navy); color:#fff;
-  font-size:12px; cursor:pointer; font-family:inherit; font-weight:500;
-}
-.add-no {
-  padding:7px; background:none; border:none;
-  color:var(--muted); font-size:12px; cursor:pointer; font-family:inherit;
-}
-.cu-hint { font-size:10px; color:#BBC5D8; margin-top:5px; font-style:italic; }
+.chip.on .dx{display:block;}
 
-/* ── PWA 설치 배너 ── */
-.pwa-banner {
-  display:none;
-  position:fixed;
-  bottom:0; left:0; right:0;
-  background:var(--navy);
-  padding:12px 16px;
-  z-index:999;
-  align-items:center;
-  gap:10px;
-  border-top:1px solid rgba(255,255,255,.1);
-  animation: slideUp .3s ease;
+.add-row{display:none;align-items:center;gap:6px;margin-top:9px;}
+.add-row.open{display:flex;}
+.add-inp{
+  padding:8px 11px;border-radius:9px;
+  border:1.5px solid var(--border);background:var(--bg);
+  color:var(--text);font-size:13px;outline:none;font-family:inherit;
 }
-@keyframes slideUp {
-  from { transform:translateY(100%); }
-  to { transform:translateY(0); }
+.add-inp:focus{border-color:var(--accent);background:#fff;}
+.add-ok{
+  padding:8px 13px;border-radius:9px;border:none;
+  background:var(--accent);color:#fff;
+  font-size:12px;cursor:pointer;font-family:inherit;font-weight:600;
 }
-.pwa-banner.show { display:flex; }
-.pwa-txt { flex:1; }
-.pwa-txt-main { font-size:13px; font-weight:600; color:#fff; }
-.pwa-txt-sub { font-size:11px; color:rgba(255,255,255,.5); margin-top:2px; }
-.pwa-install {
-  padding:8px 14px; border-radius:8px;
-  background:var(--accent); border:none;
-  color:#fff; font-size:12px; font-weight:600;
-  cursor:pointer; font-family:inherit; white-space:nowrap;
-}
-.pwa-close {
-  background:none; border:none;
-  color:rgba(255,255,255,.4); font-size:18px;
-  cursor:pointer; padding:4px; line-height:1;
-}
-.gamil-tag {
-  font-family:'DM Sans',sans-serif;
-  font-size:8px; color:rgba(255,255,255,0.28);
-  letter-spacing:.1em; text-align:right; line-height:1.5;
-  text-transform:uppercase;
-}
-.gamil-tag strong { display:block; font-size:9px; color:rgba(255,255,255,0.4); letter-spacing:.06em; }
+.add-no{padding:8px;background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;font-family:inherit;}
 
-/* ── AD BANNER ── */
-.ad-banner {
+.cu-hint{font-size:11px;color:#C0C0C0;margin-top:6px;font-style:italic;}
+
+/* AD BANNER */
+.ad-banner{
   flex-shrink:0;
-  margin:0 10px;
-  margin-bottom: max(10px, env(safe-area-inset-bottom));
-  border-radius:10px;
-  overflow:hidden;
-  border:1px solid var(--border);
+  margin:8px 12px;
+  margin-bottom:max(10px,env(safe-area-inset-bottom));
+  border-radius:12px;overflow:hidden;
+}
+.ad-inner{
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:12px 16px;
+  background:#F7F0E8;
   position:relative;
 }
-.ad-inner {
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  padding:10px 14px 10px;
-  background:linear-gradient(135deg,#0D1B3E 0%,#1A3260 100%);
-  text-decoration:none;
-  cursor:default;
-}
-.ad-label {
-  position:absolute;
-  top:6px; left:8px;
-  font-size:7px; color:rgba(255,255,255,.25);
-  letter-spacing:.1em; text-transform:uppercase;
-  border:1px solid rgba(255,255,255,.1);
-  padding:1px 4px; border-radius:3px;
-}
-.ad-slogan { text-align:center; }
-.ad-slogan-main {
-  font-size:15px; font-weight:700;
-  color:#fff; letter-spacing:-.3px;
+.ad-slogan-main{
+  font-size:14px;font-weight:700;
+  color:#3D2B1F;letter-spacing:-.2px;
   font-family:'Noto Sans KR',sans-serif;
 }
-.ad-slogan-sub {
-  font-size:10px; color:rgba(255,255,255,.4);
-  margin-top:4px; letter-spacing:.02em;
-  display:block;
-  text-decoration:none;
+.ad-slogan-sub{
+  font-size:10px;color:rgba(61,43,31,.45);
+  margin-top:3px;letter-spacing:.02em;
+  text-decoration:none;display:block;text-align:center;
 }
-.credit-bar {
-  text-align:center;
-  padding:5px 0 max(12px, env(safe-area-inset-bottom));
-  font-size:9px; color:#C8D0E0; letter-spacing:.05em;
+
+/* COLOR PICKER */
+.color-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.45);z-index:600;
+  align-items:flex-end;justify-content:center;
+  padding-bottom:max(16px,env(safe-area-inset-bottom));
+}
+.color-overlay.show{display:flex;}
+.color-box{
+  background:#fff;border-radius:20px 20px 16px 16px;
+  padding:20px;width:100%;max-width:400px;
+}
+.color-box-title{
+  font-size:13px;font-weight:700;color:var(--text);
+  margin-bottom:16px;text-align:center;
+}
+.car-options{
+  display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
+  margin-bottom:16px;
+}
+.car-opt{
+  font-size:28px;cursor:pointer;padding:8px;
+  border-radius:12px;border:2px solid transparent;
+  background:var(--bg);transition:border-color .1s,transform .1s;
+}
+.car-opt:active{transform:scale(.88);}
+.car-opt.selected{border-color:var(--accent);}
+.color-options{
+  display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
+  margin-bottom:16px;
+}
+.color-opt{
+  width:30px;height:30px;border-radius:50%;
+  cursor:pointer;border:3px solid transparent;
+  transition:transform .1s,border-color .1s;
   flex-shrink:0;
 }
+.color-opt:active{transform:scale(.85);}
+.color-opt.selected{border-color:var(--accent);transform:scale(1.1);}
+.color-opt.white{border:2px solid var(--border);}
+  width:100%;padding:11px;border-radius:10px;border:none;
+  background:var(--accent);color:#fff;
+  font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;
+}
+
+/* HINT PANEL */
+.hint-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.5);z-index:500;
+  align-items:flex-end;justify-content:center;
+}
+.hint-overlay.show{display:flex;}
+.hint-box{
+  background:#fff;
+  border-radius:20px 20px 0 0;
+  padding:20px 20px max(24px,env(safe-area-inset-bottom));
+  width:100%;max-width:400px;
+  max-height:80dvh;overflow-y:auto;
+}
+.hint-top{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px;
+}
+.hint-title{font-size:15px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px;}
+.hint-close{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:4px;line-height:1;}
+.hint-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border);}
+.hint-item:last-of-type{border-bottom:none;}
+.hint-emoji{font-size:22px;flex-shrink:0;margin-top:2px;}
+.hint-item-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.hint-item-desc{font-size:12px;color:var(--muted);line-height:1.6;}
+.hint-item-desc b{color:var(--accent);}
+.hint-contact{
+  margin-top:14px;padding:12px;
+  background:var(--accent-soft);border-radius:10px;
+  text-align:center;
+}
+.hint-contact-txt{font-size:11px;color:var(--muted);margin-bottom:4px;}
+.hint-contact a{font-size:12px;font-weight:600;color:var(--accent);text-decoration:none;}
+
+/* ONBOARD */
+.onboard-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.45);z-index:500;
+  align-items:center;justify-content:center;padding:20px;
+}
+.onboard-overlay.show{display:flex;}
+.onboard-box{
+  background:#fff;border-radius:16px;
+  padding:24px 20px 20px;max-width:300px;width:100%;
+  text-align:center;
+}
+.onboard-icon{font-size:32px;margin-bottom:12px;}
+.onboard-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px;}
+.onboard-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:18px;}
+.onboard-desc b{color:var(--accent);}
+.onboard-btn{
+  width:100%;padding:12px;background:var(--accent);
+  border:none;border-radius:10px;color:#fff;
+  font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;
+}
+
+/* PWA BANNER */
+.pwa-banner{
+  display:none;position:fixed;bottom:0;left:0;right:0;
+  background:var(--black);padding:12px 16px;
+  z-index:999;align-items:center;gap:10px;
+  border-top:1px solid rgba(255,255,255,.1);
+  animation:slideUp .3s ease;
+}
+@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.pwa-banner.show{display:flex;}
+.pwa-txt{flex:1;}
+.pwa-txt-main{font-size:13px;font-weight:600;color:#fff;}
+.pwa-txt-sub{font-size:11px;color:rgba(255,255,255,.5);margin-top:2px;}
+.pwa-install{
+  padding:8px 14px;border-radius:8px;border:none;
+  background:var(--accent);color:#fff;
+  font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;
+}
+.pwa-close{background:none;border:none;color:rgba(255,255,255,.4);font-size:18px;cursor:pointer;padding:4px;line-height:1;}
 </style>
 </head>
 <body>
 
-<!-- PWA 설치 유도 배너 -->
+<!-- 꿀팁 패널 -->
+<div class="hint-overlay" id="hint-overlay" onclick="if(event.target===this)closeHint()">
+  <div class="hint-box">
+    <div class="hint-top">
+      <div class="hint-title">💡 꿀팁</div>
+      <button class="hint-close" onclick="closeHint()">✕</button>
+    </div>
+    <div class="hint-item">
+      <div class="hint-emoji">☰</div>
+      <div>
+        <div class="hint-item-title">항목 순서 바꾸기</div>
+        <div class="hint-item-desc">각 항목 왼쪽 <b>≡ 버튼</b>을 꾹 누른 채로 위아래로 드래그하면 층·구역·번호 순서를 내 주차장에 맞게 바꿀 수 있어요.</div>
+      </div>
+    </div>
+    <div class="hint-item">
+      <div class="hint-emoji">🚗</div>
+      <div>
+        <div class="hint-item-title">내 차 아이콘 바꾸기</div>
+        <div class="hint-item-desc"><b>차 아이콘을 탭</b>하면 원하는 아이콘으로 바꿀 수 있어요. 가족 차를 구분할 때 유용해요!</div>
+      </div>
+    </div>
+    <div class="hint-item">
+      <div class="hint-emoji">➕</div>
+      <div>
+        <div class="hint-item-title">차량 여러 대 등록</div>
+        <div class="hint-item-desc">상단 탭의 <b>+</b> 버튼으로 차량을 추가할 수 있어요. 대수 제한 없이 등록 가능하고, 차량별로 위치가 따로 저장돼요.</div>
+      </div>
+    </div>
+    <div class="hint-item">
+      <div class="hint-emoji">🏠</div>
+      <div>
+        <div class="hint-item-title">홈화면에 추가하기</div>
+        <div class="hint-item-desc">홈화면에 추가하면 앱처럼 바로 열려요.<br>📱 <b>아이폰:</b> 하단 공유버튼(□↑) → 홈 화면에 추가<br>📱 <b>안드로이드:</b> 우측 상단 ⋮ → 홈 화면에 추가</div>
+      </div>
+    </div>
+    <div class="hint-item">
+      <div class="hint-emoji">📤</div>
+      <div>
+        <div class="hint-item-title">위치 공유하기</div>
+        <div class="hint-item-desc">위치 저장 후 <b>공유하기</b> 버튼을 누르면 카카오톡 등으로 주차 위치를 바로 전송할 수 있어요.</div>
+      </div>
+    </div>
+    <div class="hint-contact">
+      <div class="hint-contact-txt" style="color:var(--accent);font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;">
+        <svg width="16" height="20" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 0C4.477 0 0 4.477 0 10C0 16.5 10 24 10 24C10 24 20 16.5 20 10C20 4.477 15.523 0 10 0Z" fill="#F4631E"/>
+          <circle cx="10" cy="10" r="5.5" fill="white"/>
+          <text x="10" y="14" text-anchor="middle" font-family="DM Sans, sans-serif" font-weight="700" font-size="8" fill="#F4631E">P</text>
+        </svg>
+        문의, 제안은 여기에 주차해 주세요
+      </div>
+      <a href="mailto:chaeodie@gmail.com">chaeodie@gmail.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- 차 아이콘 선택 -->
+<div class="color-overlay" id="color-overlay" onclick="if(event.target===this)closeColorPicker()">
+  <div class="color-box">
+    <div class="color-box-title">내 차 꾸미기</div>
+    <div style="font-size:10px;color:var(--muted);text-align:center;margin-bottom:10px;">아이콘</div>
+    <div class="car-options" id="car-options"></div>
+    <div style="font-size:10px;color:var(--muted);text-align:center;margin:12px 0 8px;">색상</div>
+    <div class="color-options" id="color-options"></div>
+    <button class="color-close" onclick="closeColorPicker()">확인</button>
+  </div>
+</div>
+
+<!-- 온보딩 -->
+<div class="onboard-overlay" id="onboard">
+  <div class="onboard-box">
+    <div class="onboard-icon">💡</div>
+    <div class="onboard-title">이런 기능도 있어요!</div>
+    <div class="onboard-desc">
+      <b>≡ 버튼</b>을 꾹 누르면 항목 순서를<br>
+      내 주차장에 맞게 바꿀 수 있어요.<br><br>
+      우측 상단 <b>💡 꿀팁</b>에서 더 많은<br>활용법을 확인해 보세요!
+    </div>
+    <button class="onboard-btn" onclick="closeOnboard()">확인했어요!</button>
+  </div>
+</div>
+
+<!-- PWA 배너 -->
 <div class="pwa-banner" id="pwa-banner">
   <div class="pwa-txt">
     <div class="pwa-txt-main">📱 홈화면에 추가하면 앱처럼 써요</div>
@@ -409,11 +528,18 @@ body {
 
 <!-- TOPBAR -->
 <div class="topbar">
-  <div class="p-icon">P</div>
-  <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+  <div class="p-icon">
+    <svg width="20" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 0C4.477 0 0 4.477 0 10C0 16.5 10 24 10 24C10 24 20 16.5 20 10C20 4.477 15.523 0 10 0Z" fill="white"/>
+      <circle cx="10" cy="10" r="5.5" fill="#F4631E"/>
+      <text x="10" y="14" text-anchor="middle" font-family="DM Sans, sans-serif" font-weight="700" font-size="8" fill="white">P</text>
+    </svg>
+  </div>
+  <div>
     <div class="app-title">차어디</div>
     <div class="app-sub">주차 위치 확인기</div>
   </div>
+  <div style="flex:1"></div>
   <div class="gamil-tag">
     <strong>Gamil</strong>
     좋은예감 일등도시
@@ -423,9 +549,9 @@ body {
 <!-- CAR TABS -->
 <div class="car-tabs-wrap" id="car-tabs"></div>
 
-<!-- CAR NAME BAR -->
+<!-- CAR BAR -->
 <div class="car-bar">
-  <span class="car-icon">🚗</span>
+  <button class="car-icon-btn" id="car-icon-btn" onclick="openColorPicker()">🚗</button>
   <span class="car-lbl">내 차</span>
   <div class="car-display" id="car-display" onclick="openCarEdit()">
     <span id="car-name-txt">부릉이</span>
@@ -437,18 +563,23 @@ body {
     <button class="car-save" onclick="saveCarName()">완료</button>
     <button class="add-no" onclick="closeCarEdit()">취소</button>
   </div>
+  <button class="hint-btn" onclick="openHint()">💡 꿀팁</button>
 </div>
 
 <!-- BANNER -->
 <div class="banner">
-  <div class="banner-left">
-    <div class="banner-lbl">저장된 위치</div>
-    <div class="banner-val empty" id="bv">아직 저장된 위치가 없어요</div>
-    <div class="banner-time" id="bt"></div>
-  </div>
-  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;">
-    <div class="status-dot" id="sdot"></div>
-    <button class="share-btn" id="share-btn" onclick="shareLocation()" style="display:none">공유</button>
+  <div class="banner-lbl">저장된 위치</div>
+  <div class="banner-top">
+    <div>
+      <div class="banner-val empty" id="bv">아직 저장된 위치가 없어요</div>
+      <div class="banner-time" id="bt"></div>
+    </div>
+    <div class="banner-right">
+      <div class="status-dot" id="sdot"></div>
+      <button class="share-btn" id="share-btn" onclick="shareLocation()">
+        📤 공유하기
+      </button>
+    </div>
   </div>
 </div>
 
@@ -458,12 +589,13 @@ body {
     <div class="sec-inner">
       <div class="sec-head">
         <div class="drag-h"><span></span><span></span><span></span></div>
+        <span class="sec-icon">🗝️</span>
         <span class="sec-title">층</span>
         <button class="sec-add" onclick="openAdd('fl')">+ 추가</button>
       </div>
       <div class="chips expanded" id="fl-chips"></div>
       <div class="add-row" id="fl-add">
-        <input class="add-inp" id="fl-i" placeholder="예: B3" maxlength="5" style="width:80px"
+        <input class="add-inp" id="fl-i" placeholder="예: B3" maxlength="5" style="width:82px"
           onkeydown="if(event.key==='Enter')doAdd('fl')">
         <button class="add-ok" onclick="doAdd('fl')">확인</button>
         <button class="add-no" onclick="closeAdd('fl')">취소</button>
@@ -475,10 +607,11 @@ body {
     <div class="sec-inner">
       <div class="sec-head">
         <div class="drag-h"><span></span><span></span><span></span></div>
-        <span class="sec-title">구역 A – Z</span>
+        <span class="sec-icon">🔲</span>
+        <span class="sec-title">구역 <span>A – Z</span></span>
       </div>
       <div class="chips collapsed" id="zo-chips"></div>
-      <button class="xbtn" id="zo-xbtn" onclick="toggleExp('zo')">▾ 더보기</button>
+      <button class="xbtn visible" id="zo-xbtn" onclick="toggleExp('zo')">∨ 더보기</button>
     </div>
   </div>
 
@@ -486,14 +619,15 @@ body {
     <div class="sec-inner">
       <div class="sec-head">
         <div class="drag-h"><span></span><span></span><span></span></div>
+        <span class="sec-icon">🔢</span>
         <span class="sec-title">번호</span>
         <button class="sec-add" onclick="openAdd('nu')">+ 추가</button>
       </div>
       <div class="chips collapsed" id="nu-chips"></div>
-      <button class="xbtn" id="nu-xbtn" onclick="toggleExp('nu')">▾ 더보기</button>
+      <button class="xbtn visible" id="nu-xbtn" onclick="toggleExp('nu')">∨ 더보기</button>
       <div class="add-row" id="nu-add">
         <input class="add-inp" id="nu-i" placeholder="예: 35" maxlength="4"
-          inputmode="numeric" style="width:80px" onkeydown="if(event.key==='Enter')doAdd('nu')">
+          inputmode="numeric" style="width:82px" onkeydown="if(event.key==='Enter')doAdd('nu')">
         <button class="add-ok" onclick="doAdd('nu')">확인</button>
         <button class="add-no" onclick="closeAdd('nu')">취소</button>
       </div>
@@ -504,30 +638,27 @@ body {
     <div class="sec-inner">
       <div class="sec-head">
         <div class="drag-h"><span></span><span></span><span></span></div>
+        <span class="sec-icon">✏️</span>
         <span class="sec-title">커스텀</span>
         <button class="sec-add" onclick="openAdd('cu')">+ 추가</button>
       </div>
       <div class="chips expanded" id="cu-chips"></div>
-      <div class="cu-hint" id="cu-hint">+ 추가로 나만의 항목 (왼쪽문, 기둥옆 …)</div>
+      <div class="cu-hint" id="cu-hint">+ 추가로 나만의 항목을 넣어보세요 (왼쪽문, 기둥옆 …)</div>
       <div class="add-row" id="cu-add">
         <input class="add-inp" id="cu-i" placeholder="5글자 이내" maxlength="5"
-          style="width:110px" onkeydown="if(event.key==='Enter')doAdd('cu')">
+          style="width:115px" onkeydown="if(event.key==='Enter')doAdd('cu')">
         <button class="add-ok" onclick="doAdd('cu')">확인</button>
         <button class="add-no" onclick="closeAdd('cu')">취소</button>
       </div>
     </div>
   </div>
-
 </div>
 
-<!-- 광고 배너 -->
+<!-- AD BANNER -->
 <div class="ad-banner">
   <div class="ad-inner">
-    <div class="ad-label">AD</div>
-    <div class="ad-slogan">
-      <div class="ad-slogan-main">좋은예감 일등도시, 감일 🌟</div>
-      <a href="mailto:chaeodie@gmail.com" class="ad-slogan-sub">chaeodie@gmail.com</a>
-    </div>
+    <div class="ad-slogan-main">좋은예감 일등도시, 감일 🌟</div>
+    <a href="mailto:chaeodie@gmail.com" class="ad-slogan-sub">chaeodie@gmail.com</a>
   </div>
 </div>
 
@@ -536,76 +667,121 @@ var ZONES='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 var DNUMS=Array.from({length:20},function(_,i){return String(i+1);});
 var DEF_FLOORS=['B1','B2','지상'];
 var expState={zo:false,nu:false};
+var CAR_ICONS=['🚗','🚙','🚘','🚕','🚐','🏎️','🚓','🚑','🚒','🛻','🚚','🚌'];
+var CAR_COLORS=[
+  {label:'빨강', filter:'none', bg:'#EF4444'},
+  {label:'주황', filter:'hue-rotate(-30deg) saturate(2)', bg:'#F97316'},
+  {label:'노랑', filter:'hue-rotate(40deg) saturate(3) brightness(1.1)', bg:'#EAB308'},
+  {label:'연두', filter:'hue-rotate(100deg) saturate(1.5)', bg:'#84CC16'},
+  {label:'초록', filter:'hue-rotate(125deg)', bg:'#22C55E'},
+  {label:'하늘', filter:'hue-rotate(175deg) saturate(1.5)', bg:'#06B6D4'},
+  {label:'파랑', filter:'hue-rotate(195deg) saturate(1.5)', bg:'#3B82F6'},
+  {label:'보라', filter:'hue-rotate(260deg) saturate(1.2)', bg:'#8B5CF6'},
+  {label:'분홍', filter:'hue-rotate(-60deg) saturate(1.8)', bg:'#EC4899'},
+  {label:'회색', filter:'grayscale(1) brightness(0.8)', bg:'#9CA3AF'},
+  {label:'검정', filter:'grayscale(1) brightness(0.15)', bg:'#374151'},
+  {label:'흰색', filter:'grayscale(1) brightness(4)', bg:'#F3F4F6'},
+];
 
-/* ── STATE ── */
 var S={
-  cars:[{name:'부릉이',floors:['B1','B2','지상'],xnums:[],customs:[],sel:{fl:null,zo:null,nu:null,cu:null},at:null,secOrder:['fl','zo','nu','cu']}],
+  cars:[{name:'부릉이',icon:'🚗',iconFilter:'none',floors:['B1','B2','지상'],xnums:[],customs:[],
+         sel:{fl:null,zo:null,nu:null,cu:null},at:null,secOrder:['fl','zo','nu','cu']}],
   active:0
 };
 
-function load(){try{var d=JSON.parse(localStorage.getItem('chaeodie_v3')||'null');if(d)S=d;}catch(e){}}
-function persist(){try{localStorage.setItem('chaeodie_v3',JSON.stringify(S));}catch(e){}}
+function load(){try{var d=JSON.parse(localStorage.getItem('chaeodie_v4')||'null');if(d)S=d;}catch(e){}}
+function persist(){try{localStorage.setItem('chaeodie_v4',JSON.stringify(S));}catch(e){}}
 function car(){return S.cars[S.active];}
 
-/* ── CAR TABS ── */
+/* TABS */
 function renderTabs(){
   var wrap=document.getElementById('car-tabs');
   wrap.innerHTML='';
   S.cars.forEach(function(c,i){
     var btn=document.createElement('button');
     btn.className='car-tab'+(i===S.active?' active':'');
-    btn.innerHTML=c.name+(S.cars.length>1?'<span class="tab-del" onclick="delCar('+i+',event)">✕</span>':'');
+    btn.innerHTML=(c.icon||'🚗')+' '+c.name+(S.cars.length>1?'<span class="tab-del" onclick="delCar('+i+',event)">✕</span>':'');
     btn.onclick=function(e){if(e.target.classList.contains('tab-del'))return;switchCar(i);};
     wrap.appendChild(btn);
   });
   var add=document.createElement('button');
-  add.className='tab-add';
-  add.textContent='+';
-  add.title='차량 추가';
-  add.onclick=addCar;
+  add.className='tab-add'; add.textContent='+'; add.onclick=addCar;
   wrap.appendChild(add);
 }
 
 function switchCar(i){
-  S.active=i;
-  persist();
-  renderTabs();
-  restoreOrder();
-  render();
-  upd();
-  document.getElementById('car-name-txt').textContent=car().name||'내 차';
-  closeCarEdit();
+  S.active=i; persist();
+  renderTabs(); restoreOrder(); render(); upd();
+  document.getElementById('car-name-txt').textContent=car().name||'부릉이';
+  document.getElementById('car-icon-btn').textContent=car().icon||'🚗';
+  updateIconBtn(); closeCarEdit();
 }
 
 function addCar(){
-  var name=prompt('새 차 이름을 입력하세요 (5자 이내)','');
+  var name=prompt('새 차 이름 (5자 이내)','');
   if(name===null)return;
   name=name.trim().slice(0,5)||'차'+(S.cars.length+1);
-  S.cars.push({name:name,floors:['B1','B2','지상'],xnums:[],customs:[],sel:{fl:null,zo:null,nu:null,cu:null},at:null,secOrder:['fl','zo','nu','cu']});
+  S.cars.push({name:name,icon:'🚗',floors:['B1','B2','지상'],xnums:[],customs:[],
+               sel:{fl:null,zo:null,nu:null,cu:null},at:null,secOrder:['fl','zo','nu','cu']});
   S.active=S.cars.length-1;
-  persist();
-  renderTabs();
-  restoreOrder();
-  render();
-  upd();
+  persist(); renderTabs(); restoreOrder(); render(); upd();
   document.getElementById('car-name-txt').textContent=name;
+  document.getElementById('car-icon-btn').textContent='🚗';
 }
 
 function delCar(i,e){
   e.stopPropagation();
   if(S.cars.length===1){alert('차량이 1대일 때는 삭제할 수 없어요.');return;}
-  if(!confirm('['+S.cars[i].name+'] 차량을 삭제할까요?'))return;
+  if(!confirm('['+S.cars[i].name+'] 삭제할까요?'))return;
   S.cars.splice(i,1);
   if(S.active>=S.cars.length)S.active=S.cars.length-1;
-  persist();
-  renderTabs();
-  restoreOrder();
-  render();
-  upd();
-  document.getElementById('car-name-txt').textContent=car().name||'내 차';
+  persist(); renderTabs(); restoreOrder(); render(); upd();
+  document.getElementById('car-name-txt').textContent=car().name||'부릉이';
+  document.getElementById('car-icon-btn').textContent=car().icon||'🚗';
 }
 
-/* ── CAR NAME EDIT ── */
+/* CAR ICON */
+function openColorPicker(){
+  var opts=document.getElementById('car-options');
+  opts.innerHTML=CAR_ICONS.map(function(ic){
+    var sel=ic===(car().icon||'🚗');
+    return '<button class="car-opt'+(sel?' selected':'')+'" style="filter:'+(car().iconFilter||'none')+'" onclick="selectIcon(\''+ic+'\')">'+ic+'</button>';
+  }).join('');
+  var copts=document.getElementById('color-options');
+  var curFilter=car().iconFilter||'none';
+  copts.innerHTML=CAR_COLORS.map(function(c){
+    var sel=c.filter===curFilter;
+    var isLight=c.label==='흰색'||c.label==='노랑';
+    return '<div class="color-opt'+(sel?' selected':'')+'" style="background:'+c.bg+';'+(isLight?'border:1.5px solid #E8E8E8;':'')+'" title="'+c.label+'" onclick="selectColor(\''+c.filter.replace(/'/g,'\\"')+'\')"></div>';
+  }).join('');
+  updateIconBtn();
+  document.getElementById('color-overlay').classList.add('show');
+}
+
+function updateIconBtn(){
+  var btn=document.getElementById('car-icon-btn');
+  btn.style.filter=car().iconFilter||'none';
+}
+function selectColor(f){
+  car().iconFilter=f; persist();
+  updateIconBtn();
+  var curFilter=f;
+  document.querySelectorAll('.color-opt').forEach(function(b,i){
+    b.classList.toggle('selected', CAR_COLORS[i]&&CAR_COLORS[i].filter===curFilter);
+  });
+  renderTabs();
+}
+function closeColorPicker(){document.getElementById('color-overlay').classList.remove('show');}
+function selectIcon(ic){
+  car().icon=ic; persist();
+  document.getElementById('car-icon-btn').textContent=ic;
+  renderTabs();
+  document.querySelectorAll('.car-opt').forEach(function(b){
+    b.classList.toggle('selected', b.textContent===ic);
+  });
+}
+
+/* CAR NAME */
 function openCarEdit(){
   document.getElementById('car-display').style.display='none';
   document.getElementById('car-edit').classList.add('open');
@@ -621,78 +797,72 @@ function saveCarName(){
   var v=document.getElementById('car-inp').value.trim();
   if(v)car().name=v;
   persist();
-  document.getElementById('car-name-txt').textContent=car().name||'내 차';
-  renderTabs();
-  closeCarEdit();
-  upd();
+  document.getElementById('car-name-txt').textContent=car().name||'부릉이';
+  renderTabs(); closeCarEdit(); upd();
 }
 
-/* ── DISPLAY ── */
+/* DISPLAY */
 function upd(){
   var c=car();
   var parts=[c.sel.fl,c.sel.zo,c.sel.nu,c.sel.cu].filter(Boolean);
-  var bv=document.getElementById('bv'),bt=document.getElementById('bt'),dot=document.getElementById('sdot');
-  var shareBtn=document.getElementById('share-btn');
+  var bv=document.getElementById('bv'),bt=document.getElementById('bt');
+  var dot=document.getElementById('sdot'),sb=document.getElementById('share-btn');
+  var name=c.name||'부릉이';
   if(parts.length){
-    bv.textContent=(c.name||'내 차')+'  ·  '+parts.join(' · ');
-    bv.classList.remove('empty');
-    dot.classList.add('on');
-    shareBtn.style.display='block';
-    if(c.at){var d=new Date(c.at);bt.textContent=(d.getMonth()+1)+'월 '+d.getDate()+'일 '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)+' 저장됨';}
+    bv.textContent=name+'  ·  '+parts.join(' · ');
+    bv.classList.remove('empty'); dot.classList.add('on');
+    sb.style.display='flex';
+    if(c.at){
+      var d=new Date(c.at);
+      bt.textContent=(d.getMonth()+1)+'월 '+d.getDate()+'일 '
+        +('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)+' 저장됨';
+    }
   }else{
     bv.textContent='아직 저장된 위치가 없어요';
-    bv.classList.add('empty');
-    dot.classList.remove('on');
-    shareBtn.style.display='none';
-    bt.textContent='';
+    bv.classList.add('empty'); dot.classList.remove('on');
+    sb.style.display='none'; bt.textContent='';
   }
 }
 
-/* ── SHARE ── */
+/* SHARE */
 function shareLocation(){
   var c=car();
   var parts=[c.sel.fl,c.sel.zo,c.sel.nu,c.sel.cu].filter(Boolean);
-  var name=c.name||'내 차';
-  var loc=parts.join(' · ');
   var d=new Date(c.at);
-  var timeStr=(d.getMonth()+1)+'월 '+d.getDate()+'일 '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
-  var text='🅿️ '+name+' 주차 위치\n\n'+loc+'\n\n'+timeStr+' 저장';
+  var time=(d.getMonth()+1)+'월 '+d.getDate()+'일 '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
+  var text='🅿️ '+(c.name||'내 차')+' 주차 위치\n\n'+parts.join(' · ')+'\n\n'+time+' 저장\n─────────────\n차어디로 저장하기 👉 https://chaeodie.github.io/gamil';
   if(navigator.share){
-    navigator.share({ title:'차어디 - 주차 위치', text:text })
-      .catch(function(){});
-  } else {
-    // 공유 API 미지원 시 클립보드 복사
-    if(navigator.clipboard){
-      navigator.clipboard.writeText(text).then(function(){
-        alert('클립보드에 복사됐어요! 카카오톡에 붙여넣기 하세요.');
-      });
-    }
+    navigator.share({title:'차어디 - 주차 위치',text:text}).catch(function(){});
+  }else if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(function(){
+      alert('클립보드에 복사됐어요!\n카카오톡에 붙여넣기 하세요.');
+    });
   }
 }
 
-/* ── TAP ── */
+/* TAP */
 function tap(cat,val){
   var c=car();
   c.sel[cat]=c.sel[cat]===val?null:val;
   c.at=Date.now();
-  persist();render();upd();
+  persist(); render(); upd();
 }
 function delFloor(val,e){
   e.stopPropagation();
   var c=car();
   c.floors=c.floors.filter(function(v){return v!==val;});
   if(c.sel.fl===val)c.sel.fl=null;
-  persist();render();upd();
+  persist(); render(); upd();
 }
 function delCustom(val,e){
   e.stopPropagation();
   var c=car();
   c.customs=c.customs.filter(function(v){return v!==val;});
   if(c.sel.cu===val)c.sel.cu=null;
-  persist();render();upd();
+  persist(); render(); upd();
 }
 
-/* ── RENDER ── */
+/* RENDER */
 function render(){
   var c=car();
   document.getElementById('fl-chips').innerHTML=c.floors.map(function(v,i){
@@ -725,22 +895,22 @@ function render(){
 function applyRadius(){
   var secs=document.querySelectorAll('#sections-wrap .sec');
   secs.forEach(function(s,i){
-    s.style.borderRadius='';s.style.borderTop='';
-    if(i===0)s.style.borderRadius='12px 12px 0 0';
-    if(i===secs.length-1)s.style.borderRadius=(secs.length===1?'12px':'0 0 12px 12px');
+    s.style.borderRadius=''; s.style.borderTop='';
+    if(i===0)s.style.borderRadius='14px 14px 0 0';
+    if(i===secs.length-1)s.style.borderRadius=(secs.length===1?'14px':'0 0 14px 14px');
     if(i>0)s.style.borderTop='none';
   });
 }
 
-/* ── EXPAND ── */
+/* EXPAND */
 function toggleExp(key){
   expState[key]=!expState[key];
   var el=document.getElementById(key+'-chips'),btn=document.getElementById(key+'-xbtn');
-  if(expState[key]){el.classList.remove('collapsed');el.classList.add('expanded');btn.textContent='▴ 접기';}
-  else{el.classList.remove('expanded');el.classList.add('collapsed');btn.textContent='▾ 더보기';}
+  if(expState[key]){el.classList.remove('collapsed');el.classList.add('expanded');btn.textContent='∧ 접기';}
+  else{el.classList.remove('expanded');el.classList.add('collapsed');btn.textContent='∨ 더보기';}
 }
 
-/* ── ADD ── */
+/* ADD */
 function openAdd(t){
   ['fl','nu','cu'].forEach(function(x){document.getElementById(x+'-add').classList.remove('open');document.getElementById(x+'-i').value='';});
   document.getElementById(t+'-add').classList.add('open');
@@ -756,7 +926,28 @@ function doAdd(t){
   closeAdd(t);persist();render();upd();
 }
 
-/* ── DRAG ── */
+/* HINT */
+function openHint(){document.getElementById('hint-overlay').classList.add('show');}
+function closeHint(){document.getElementById('hint-overlay').classList.remove('show');}
+
+/* ONBOARDING */
+function closeOnboard(){
+  document.getElementById('onboard').classList.remove('show');
+  localStorage.setItem('onboard_done','1');
+}
+function checkOnboard(){
+  if(!localStorage.getItem('onboard_done')){
+    setTimeout(function(){document.getElementById('onboard').classList.add('show');},1500);
+    setTimeout(function(){
+      document.querySelectorAll('.drag-h').forEach(function(h){
+        h.classList.add('wobble');
+        setTimeout(function(){h.classList.remove('wobble');},2000);
+      });
+    },800);
+  }
+}
+
+/* DRAG */
 (function(){
   var wrap=document.getElementById('sections-wrap');
   var dragging=null,placeholder=null,dragOffsetY=0;
@@ -766,7 +957,7 @@ function doAdd(t){
     sec.classList.add('dragging');
     sec.style.cssText='position:fixed;left:'+r.left+'px;width:'+r.width+'px;top:'+(y-dragOffsetY)+'px;z-index:999;';
     placeholder=document.createElement('div');
-    placeholder.style.cssText='height:'+r.height+'px;background:var(--accent-soft);border-radius:10px;border:2px dashed var(--border);';
+    placeholder.style.cssText='height:'+r.height+'px;background:var(--accent-soft);border-radius:12px;border:2px dashed var(--border);margin-bottom:0;';
     wrap.insertBefore(placeholder,sec.nextSibling);
   }
   function move(y){
@@ -792,77 +983,60 @@ function doAdd(t){
   document.addEventListener('touchend',end);
 })();
 
-/* ── ORDER RESTORE ── */
+/* RESTORE ORDER */
 function restoreOrder(){
   var c=car();if(!c.secOrder)return;
   var wrap=document.getElementById('sections-wrap');
   c.secOrder.forEach(function(k){var el=wrap.querySelector('[data-key="'+k+'"]');if(el)wrap.appendChild(el);});
 }
 
-/* ── INIT ── */
-load();
-renderTabs();
-restoreOrder();
-document.getElementById('car-name-txt').textContent=car().name||'부릉이';
-render();
-upd();
-
-/* ── PWA ── */
-var deferredPrompt = null;
-
-// 서비스워커 등록
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js', {scope: './'})
-    .catch(function(e){ console.log('SW 등록 실패:', e); });
+/* PWA */
+var deferredPrompt=null;
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(function(){});
 }
-
-// 안드로이드 설치 배너
-window.addEventListener('beforeinstallprompt', function(e) {
-  e.preventDefault();
-  deferredPrompt = e;
-  // 이미 설치했으면 안 보여줌
-  if (!localStorage.getItem('pwa_installed')) {
-    setTimeout(function(){
-      document.getElementById('pwa-banner').classList.add('show');
-    }, 2000);
+window.addEventListener('beforeinstallprompt',function(e){
+  e.preventDefault();deferredPrompt=e;
+  if(!localStorage.getItem('pwa_installed')&&!localStorage.getItem('pwa_banner_closed')){
+    setTimeout(function(){document.getElementById('pwa-banner').classList.add('show');},3000);
   }
 });
-
-document.getElementById('pwa-install-btn').addEventListener('click', function() {
-  if (deferredPrompt) {
+document.getElementById('pwa-install-btn').addEventListener('click',function(){
+  if(deferredPrompt){
     deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(function(result) {
-      if (result.outcome === 'accepted') {
-        localStorage.setItem('pwa_installed', '1');
-        gtag('event', 'pwa_install', {region: 'gamil'});
-      }
-      deferredPrompt = null;
+    deferredPrompt.userChoice.then(function(r){
+      if(r.outcome==='accepted'){localStorage.setItem('pwa_installed','1');}
+      deferredPrompt=null;
       document.getElementById('pwa-banner').classList.remove('show');
     });
   }
 });
-
-function closePwaBanner() {
+function closePwaBanner(){
   document.getElementById('pwa-banner').classList.remove('show');
-  localStorage.setItem('pwa_banner_closed', '1');
+  localStorage.setItem('pwa_banner_closed','1');
+}
+var isIos=/iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+var isStandalone=('standalone' in navigator)&&navigator.standalone;
+if(isIos&&!isStandalone&&!localStorage.getItem('pwa_installed')&&!localStorage.getItem('pwa_banner_closed')){
+  setTimeout(function(){
+    var banner=document.getElementById('pwa-banner');
+    var btn=document.getElementById('pwa-install-btn');
+    banner.querySelector('.pwa-txt-sub').textContent='하단 공유버튼 □↑ → "홈 화면에 추가"';
+    btn.textContent='닫기'; btn.onclick=closePwaBanner;
+    banner.classList.add('show');
+  },3000);
 }
 
-// iOS는 beforeinstallprompt 없음 → 배너로 안내
-var isIos = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
-var isInStandaloneMode = ('standalone' in navigator) && navigator.standalone;
-if (isIos && !isInStandaloneMode && !localStorage.getItem('pwa_installed') && !localStorage.getItem('pwa_banner_closed')) {
-  setTimeout(function(){
-    var banner = document.getElementById('pwa-banner');
-    var btn = document.getElementById('pwa-install-btn');
-    var txt = banner.querySelector('.pwa-txt-main');
-    var sub = banner.querySelector('.pwa-txt-sub');
-    txt.textContent = '📱 홈화면에 추가하면 앱처럼 써요';
-    sub.innerHTML = '하단 공유버튼 □↑ → "홈 화면에 추가"';
-    btn.textContent = '닫기';
-    btn.onclick = function(){ closePwaBanner(); };
-    banner.classList.add('show');
-  }, 2000);
-}
+/* INIT */
+load();
+renderTabs();
+restoreOrder();
+document.getElementById('car-name-txt').textContent=car().name||'부릉이';
+document.getElementById('car-icon-btn').textContent=car().icon||'🚗';
+updateIconBtn();
+render();
+upd();
+checkOnboard();
 </script>
 </body>
 </html>
