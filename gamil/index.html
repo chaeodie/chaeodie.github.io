@@ -579,7 +579,19 @@ body{
 
 <!-- CAR BAR -->
 <div class="car-bar">
-  <button class="car-icon-btn" id="car-icon-btn" onclick="openColorPicker()">🚗</button>
+  <button class="car-icon-btn" id="car-icon-btn" onclick="openColorPicker()">
+    <svg id="car-svg" width="28" height="20" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="4" y="7" width="20" height="10" rx="2" fill="#EF4444"/>
+      <path d="M7 7 L10 2 L18 2 L21 7Z" fill="#EF4444"/>
+      <rect x="2" y="11" width="24" height="5" rx="1.5" fill="#CC2222"/>
+      <circle cx="7" cy="17" r="3" fill="#333"/>
+      <circle cx="7" cy="17" r="1.5" fill="#888"/>
+      <circle cx="21" cy="17" r="3" fill="#333"/>
+      <circle cx="21" cy="17" r="1.5" fill="#888"/>
+      <rect x="10.5" y="3" width="3.5" height="4" rx="0.5" fill="rgba(255,255,255,0.6)"/>
+      <rect x="15" y="3" width="3.5" height="4" rx="0.5" fill="rgba(255,255,255,0.6)"/>
+    </svg>
+  </button>
   <span class="car-lbl">내 차</span>
   <div class="car-display" id="car-display" onclick="openCarEdit()">
     <span id="car-name-txt">부릉이</span>
@@ -697,22 +709,22 @@ var DEF_FLOORS=['B1','B2','지상'];
 var expState={zo:false,nu:false};
 var CAR_ICONS=['🚗','🚙','🚘','🚕','🚐','🏎️','🚓','🚑','🚒','🛻','🚚','🚌'];
 var CAR_COLORS=[
-  {label:'빨강', filter:'none', bg:'#EF4444'},
-  {label:'주황', filter:'hue-rotate(-30deg) saturate(2)', bg:'#F97316'},
-  {label:'노랑', filter:'hue-rotate(40deg) saturate(3) brightness(1.1)', bg:'#EAB308'},
-  {label:'연두', filter:'hue-rotate(100deg) saturate(1.5)', bg:'#84CC16'},
-  {label:'초록', filter:'hue-rotate(125deg)', bg:'#22C55E'},
-  {label:'하늘', filter:'hue-rotate(175deg) saturate(1.5)', bg:'#06B6D4'},
-  {label:'파랑', filter:'hue-rotate(195deg) saturate(1.5)', bg:'#3B82F6'},
-  {label:'보라', filter:'hue-rotate(260deg) saturate(1.2)', bg:'#8B5CF6'},
-  {label:'분홍', filter:'hue-rotate(-60deg) saturate(1.8)', bg:'#EC4899'},
-  {label:'회색', filter:'grayscale(1) brightness(0.8)', bg:'#9CA3AF'},
-  {label:'검정', filter:'grayscale(1) brightness(0.15)', bg:'#374151'},
-  {label:'흰색', filter:'grayscale(1) brightness(4)', bg:'#F3F4F6'},
+  {label:'빨강',  bg:'#EF4444'},
+  {label:'주황',  bg:'#F97316'},
+  {label:'노랑',  bg:'#EAB308'},
+  {label:'연두',  bg:'#84CC16'},
+  {label:'초록',  bg:'#22C55E'},
+  {label:'하늘',  bg:'#06B6D4'},
+  {label:'파랑',  bg:'#3B82F6'},
+  {label:'보라',  bg:'#8B5CF6'},
+  {label:'분홍',  bg:'#EC4899'},
+  {label:'회색',  bg:'#9CA3AF'},
+  {label:'검정',  bg:'#374151'},
+  {label:'흰색',  bg:'#F1F5F9'},
 ];
 
 var S={
-  cars:[{name:'부릉이',icon:'🚗',iconFilter:'none',floors:['B1','B2','지상'],xnums:[],customs:[],
+  cars:[{name:'부릉이',icon:'🚗',iconColor:'#EF4444',floors:['B1','B2','지상'],xnums:[],customs:[],
          sel:{fl:null,zo:null,nu:null,cu:null},at:null,secOrder:['fl','zo','nu','cu']}],
   active:0
 };
@@ -728,15 +740,13 @@ function renderTabs(){
   S.cars.forEach(function(c,i){
     var btn=document.createElement('button');
     btn.className='car-tab'+(i===S.active?' active':'');
-    var filter=c.iconFilter||'none';
-    var iconSpan='<span style="filter:'+filter+';display:inline-block;">'+(c.icon||'🚗')+'</span>';
-    btn.innerHTML=iconSpan+' '+c.name;
+    var col=c.iconColor||'#EF4444';
+    var dot='<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:'+col+';border:1.5px solid rgba(0,0,0,.1);margin-right:3px;flex-shrink:0;"></span>';
+    btn.innerHTML=dot+c.name;
     btn.onclick=function(){ switchCar(i); };
-
     if(S.cars.length>1){
       var del=document.createElement('span');
-      del.className='tab-del';
-      del.textContent='✕';
+      del.className='tab-del'; del.textContent='✕';
       del.onclick=function(e){ e.stopPropagation(); delCar(i); };
       btn.appendChild(del);
     }
@@ -764,7 +774,7 @@ function addCar(){
 function confirmAddCar(){
   var v = document.getElementById('add-car-inp').value.trim().slice(0,5);
   var name = v || '차'+(S.cars.length+1);
-  S.cars.push({name:name,icon:'🚗',iconFilter:'none',floors:['B1','B2','지상'],xnums:[],customs:[],
+  S.cars.push({name:name,icon:'🚗',iconColor:'#EF4444',floors:['B1','B2','지상'],xnums:[],customs:[],
                sel:{fl:null,zo:null,nu:null,cu:null},at:null,secOrder:['fl','zo','nu','cu']});
   S.active = S.cars.length-1;
   persist(); cancelAddCar(); renderTabs(); restoreOrder(); render(); upd();
@@ -795,29 +805,67 @@ function openColorPicker(){
     var sel=ic===(car().icon||'🚗');
     return '<button class="car-opt'+(sel?' selected':'')+'" style="filter:'+(car().iconFilter||'none')+'" onclick="selectIcon(\''+ic+'\')">'+ic+'</button>';
   }).join('');
+function openColorPicker(){
+  var opts=document.getElementById('car-options');
+  var curColor=car().iconColor||'transparent';
+  opts.innerHTML=CAR_ICONS.map(function(ic){
+    var sel=ic===(car().icon||'🚗');
+    return '<button class="car-opt'+(sel?' selected':'')+'" onclick="selectIcon(\''+ic+'\')">'+ic+'</button>';
+  }).join('');
   var copts=document.getElementById('color-options');
-  var curFilter=car().iconFilter||'none';
-  copts.innerHTML=CAR_COLORS.map(function(c){
-    var sel=c.filter===curFilter;
-    var isLight=c.label==='흰색'||c.label==='노랑';
-    return '<div class="color-opt'+(sel?' selected':'')+'" style="background:'+c.bg+';'+(isLight?'border:1.5px solid #E8E8E8;':'')+'" title="'+c.label+'" onclick="selectColor(\''+c.filter.replace(/'/g,'\\"')+'\')"></div>';
+  copts.innerHTML=CAR_COLORS.map(function(c,idx){
+    var sel=c.bg===curColor;
+    var isLight=c.label==='없음';
+    return '<div class="color-opt'+(sel?' selected':'')+'" '
+      +'style="background:'+c.bg+';'+(isLight?'border:2px solid #E8E8E8;':'')+'" '
+      +'title="'+c.label+'" onclick="selectColorByIndex('+idx+')"></div>';
   }).join('');
   updateIconBtn();
   document.getElementById('color-overlay').classList.add('show');
 }
 
 function updateIconBtn(){
-  var btn=document.getElementById('car-icon-btn');
-  btn.style.filter=car().iconFilter||'none';
-}
-function selectColor(f){
-  car().iconFilter=f; persist();
-  updateIconBtn();
-  var curFilter=f;
-  document.querySelectorAll('.color-opt').forEach(function(b,i){
-    b.classList.toggle('selected', CAR_COLORS[i]&&CAR_COLORS[i].filter===curFilter);
+  var col=car().iconColor||'#EF4444';
+  var dark=darkenColor(col);
+  var svg=document.getElementById('car-svg');
+  if(!svg) return;
+  var rects=svg.querySelectorAll('rect, path');
+  rects.forEach(function(el){
+    var f=el.getAttribute('fill');
+    if(f && f!=='rgba(255,255,255,0.6)' && f!=='#333' && f!=='#888'){
+      if(f===el.getAttribute('data-orig')||!el.getAttribute('data-orig')){
+        if(!el.getAttribute('data-orig')) el.setAttribute('data-orig',f);
+        var orig=el.getAttribute('data-orig');
+        if(orig.includes('CC')||orig==='#CC2222'){
+          el.setAttribute('fill',dark);
+        } else {
+          el.setAttribute('fill',col);
+        }
+      }
+    }
   });
-  renderTabs();
+}
+
+function darkenColor(hex){
+  var r=parseInt(hex.slice(1,3),16);
+  var g=parseInt(hex.slice(3,5),16);
+  var b=parseInt(hex.slice(5,7),16);
+  r=Math.max(0,Math.floor(r*0.75));
+  g=Math.max(0,Math.floor(g*0.75));
+  b=Math.max(0,Math.floor(b*0.75));
+  return '#'+('0'+r.toString(16)).slice(-2)+('0'+g.toString(16)).slice(-2)+('0'+b.toString(16)).slice(-2);
+}
+
+function selectColorByIndex(idx){
+  car().iconColor=CAR_COLORS[idx].bg;
+  persist(); updateIconBtn(); renderTabs();
+  document.querySelectorAll('.color-opt').forEach(function(b,i){
+    b.classList.toggle('selected', i===idx);
+  });
+}
+
+function selectColor(f){
+  car().iconColor=f; persist(); updateIconBtn(); renderTabs();
 }
 function closeColorPicker(){document.getElementById('color-overlay').classList.remove('show');}
 function selectIcon(ic){
